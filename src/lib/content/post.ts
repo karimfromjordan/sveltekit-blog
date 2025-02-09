@@ -1,5 +1,5 @@
 class Post {
-	title = '';
+	h1 = '';
 	slug: string;
 	description?: string = undefined;
 	hero_img?: string = undefined;
@@ -9,14 +9,14 @@ class Post {
 	content: unknown[] = [];
 
 	constructor(params: {
-		title: string;
+		h1: string;
 		slug: string;
 		description?: string;
 		hero_img?: string;
 		published_at?: string;
 		updated_at?: string;
 	}) {
-		this.title = params.title;
+		this.h1 = params.h1;
 		this.slug = params.slug;
 		this.description = params.description;
 		this.hero_img = params.hero_img;
@@ -98,7 +98,7 @@ function strong(text: string, opts?: { class?: string }) {
 
 export { Post, link, strong };
 
-const post = new Post({ title: 'First post' })
+const post = new Post({ h1: 'First post' })
 	.p({
 		class: 'text-white',
 		text: ['This is a paragraph', link('Google', 'https://google.com')]
