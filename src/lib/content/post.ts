@@ -1,17 +1,15 @@
-class Nodes {
-	nodes: unknown[] = [];
-
+class NodeArray extends Array {
 	// Block nodes
-	p(params: { children: Nodes; class?: string }) {
-		this.nodes.push({ type: 'block:p', ...params });
+	p(params: { children: NodeArray; class?: string }) {
+		this.push({ type: 'block:p', ...params });
 		return this;
 	}
-	h2(params: { children: Nodes; class?: string }) {
-		this.nodes.push({ type: 'block:h2', ...params });
+	h2(params: { children: NodeArray; class?: string }) {
+		this.push({ type: 'block:h2', ...params });
 		return this;
 	}
-	h3(params: { children: Nodes; class?: string }) {
-		this.nodes.push({ type: 'block:h3', ...params });
+	h3(params: { children: NodeArray; class?: string }) {
+		this.push({ type: 'block:h3', ...params });
 		return this;
 	}
 	precode(params: {
@@ -22,82 +20,82 @@ class Nodes {
 		highlight?: number[];
 		file_name?: string;
 	}) {
-		this.nodes.push({ type: 'block:code', ...params });
+		this.push({ type: 'block:code', ...params });
 		return this;
 	}
 	img(params: { src: string; alt: string; class?: string }) {
-		this.nodes.push({ type: 'block:img', ...params });
+		this.push({ type: 'block:img', ...params });
 		return this;
 	}
-	ol(params: { children: Nodes; class?: string }) {
-		this.nodes.push({ type: 'block:ol', ...params });
+	ol(params: { children: NodeArray; class?: string }) {
+		this.push({ type: 'block:ol', ...params });
 		return this;
 	}
-	ul(params: { children: Nodes; class?: string }) {
-		this.nodes.push({ type: 'block:ul', ...params });
+	ul(params: { children: NodeArray; class?: string }) {
+		this.push({ type: 'block:ul', ...params });
 		return this;
 	}
-	li(params: { children: Nodes | Nodes; class?: string }) {
-		this.nodes.push({ type: 'block:li', ...params });
+	li(params: { children: NodeArray | NodeArray; class?: string }) {
+		this.push({ type: 'block:li', ...params });
 		return this;
 	}
-	blockquote(params: { children: Nodes; cite?: string }) {
+	blockquote(params: { children: NodeArray; cite?: string }) {
 		return this;
 	}
-	table(params: { header: (Nodes | Nodes)[]; data: Array<Nodes[]> }) {
+	table(params: { header: (NodeArray | NodeArray)[]; data: Array<NodeArray[]> }) {
 		return this;
 	}
-	note(params: { children: Nodes }) {
-		this.nodes.push({ type: 'block:note', ...params });
+	note(params: { children: NodeArray }) {
+		this.push({ type: 'block:note', ...params });
 		return this;
 	}
-	tip(params: { children: Nodes }) {
-		this.nodes.push({ type: 'block:tip', ...params });
+	tip(params: { children: NodeArray }) {
+		this.push({ type: 'block:tip', ...params });
 		return this;
 	}
-	important(params: { children: Nodes }) {
-		this.nodes.push({ type: 'block:important', ...params });
+	important(params: { children: NodeArray }) {
+		this.push({ type: 'block:important', ...params });
 		return this;
 	}
-	warning(params: { children: Nodes }) {
-		this.nodes.push({ type: 'block:warning', ...params });
+	warning(params: { children: NodeArray }) {
+		this.push({ type: 'block:warning', ...params });
 		return this;
 	}
-	caution(params: { children: Nodes }) {
-		this.nodes.push({ type: 'block:caution', ...params });
+	caution(params: { children: NodeArray }) {
+		this.push({ type: 'block:caution', ...params });
 		return this;
 	}
-	details(params: { children: Nodes }) {
-		this.nodes.push({ type: 'block:details', ...params });
+	details(params: { children: NodeArray }) {
+		this.push({ type: 'block:details', ...params });
 		return this;
 	}
-	summary(params: { children: Nodes }) {
-		this.nodes.push({ type: 'block:summary', ...params });
+	summary(params: { children: NodeArray }) {
+		this.push({ type: 'block:summary', ...params });
 		return this;
 	}
 	// Inline nodes
 	text(text: string) {
-		this.nodes.push(text);
+		this.push(text);
 		return this;
 	}
 	link(text: string, href: `https://${string}`, opts?: { class?: string }) {
-		this.nodes.push({ type: 'inline:link', text, href, ...opts });
+		this.push({ type: 'inline:link', text, href, ...opts });
 		return this;
 	}
 	strong(text: string, opts?: { class?: string }) {
-		this.nodes.push({ type: 'inline:strong', text, ...opts });
+		this.push({ type: 'inline:strong', text, ...opts });
 		return this;
 	}
 	cite(text: string, opts?: { class?: string }) {
-		this.nodes.push({ type: 'inline:cite', text, ...opts });
+		this.push({ type: 'inline:cite', text, ...opts });
 		return this;
 	}
 	code(text: string, opts?: { class?: string }) {
-		this.nodes.push({ type: 'inline:code', text, ...opts });
+		this.push({ type: 'inline:code', text, ...opts });
 		return this;
 	}
 	kbd(text: string, opts?: { class?: string }) {
-		this.nodes.push({ type: 'inline:kbd', text, ...opts });
+		this.push({ type: 'inline:kbd', text, ...opts });
 		return this;
 	}
 }
@@ -110,7 +108,7 @@ class Post {
 	published_at?: string = undefined;
 	updated_at?: string = undefined;
 
-	nodes = new Nodes();
+	nodes = new NodeArray();
 
 	constructor(params: {
 		h1: string;
@@ -119,7 +117,7 @@ class Post {
 		hero_img?: string;
 		published_at?: string;
 		updated_at?: string;
-		nodes?: Nodes;
+		nodes?: NodeArray;
 	}) {
 		this.h1 = params.h1;
 		this.slug = params.slug;
@@ -137,10 +135,10 @@ class Post {
 const post = new Post({
 	h1: 'First post',
 	slug: 'first-post',
-	nodes: new Nodes()
+	nodes: new NodeArray()
 		.p({
 			class: 'text-white',
-			children: new Nodes()
+			children: new NodeArray()
 				.text(
 					`This repository contains a GitHub workflow with a build job that builds
 					your SvelteKit app into a very minimal systemd portable service and a
@@ -152,24 +150,24 @@ const post = new Post({
 				.link('Svelte', 'https://svelte.dev')
 		})
 		.h2({
-			children: new Nodes().text('How to use This')
+			children: new NodeArray().text('How to use This')
 		})
 		.p({
-			children: new Nodes().text('To use this repository, you have two options:')
+			children: new NodeArray().text('To use this repository, you have two options:')
 		})
 		.ol({
-			children: new Nodes()
+			children: new NodeArray()
 				.li({
-					children: new Nodes().link('Use it as a template', 'https://')
+					children: new NodeArray().link('Use it as a template', 'https://')
 				})
 				.li({
-					children: new Nodes().text('Start from scratch:').ul({
-						children: new Nodes()
+					children: new NodeArray().text('Start from scratch:').ul({
+						children: new NodeArray()
 							.li({
-								children: new Nodes().text('Create a new SvelteKit project using')
+								children: new NodeArray().text('Create a new SvelteKit project using')
 							})
 							.li({
-								children: new Nodes().text('Create a new SvelteKit project using')
+								children: new NodeArray().text('Create a new SvelteKit project using')
 							})
 					})
 				})
@@ -183,24 +181,24 @@ const post = new Post({
 			code: 'console.log("Hello")'
 		})
 		.h2({
-			children: new Nodes().text('The best JavaScript frameworks')
+			children: new NodeArray().text('The best JavaScript frameworks')
 		})
 		.ol({
-			children: new Nodes()
+			children: new NodeArray()
 				.li({
-					children: new Nodes().text('Svelte')
+					children: new NodeArray().text('Svelte')
 				})
 				.li({
-					children: new Nodes().text('Vue')
+					children: new NodeArray().text('Vue')
 				})
 				.li({
-					children: new Nodes().text('Solid')
+					children: new NodeArray().text('Solid')
 				})
 		})
 		.note({
-			children: new Nodes()
+			children: new NodeArray()
 				.p({
-					children: new Nodes()
+					children: new NodeArray()
 						.text('systemd portable services')
 						.link('Google', 'https://google.com')
 				})
