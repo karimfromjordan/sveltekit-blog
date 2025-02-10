@@ -1,3 +1,86 @@
+class InlineList {
+	list: unknown[] = [];
+
+	text(text: string) {
+		this.list.push(text);
+		return this;
+	}
+	link(text: string, href: `https://${string}`, opts?: { class?: string }) {
+		this.list.push({ type: 'inline:link', text, href, ...opts });
+		return this;
+	}
+	strong(text: string, opts?: { class?: string }) {
+		this.list.push({ type: 'inline:strong', text, ...opts });
+		return this;
+	}
+}
+
+class BlockList {
+	list: unknown[] = [];
+
+	p(params: { inlines: InlineList; class?: string }) {
+		this.list.push({ type: 'block:p', ...params });
+		return this;
+	}
+	h2(params: { inlines: InlineList; class?: string }) {
+		this.list.push({ type: 'block:h2', ...params });
+		return this;
+	}
+	h3(params: { inlines: InlineList; class?: string }) {
+		this.list.push({ type: 'block:h3', ...params });
+		return this;
+	}
+	code(params: {
+		lang: 'js' | 'html' | 'svelte';
+		code: string;
+		copy?: string;
+		line_numbers?: boolean;
+		highlight?: number[];
+		file_name?: string;
+	}) {
+		this.list.push({ type: 'block:code', ...params });
+		return this;
+	}
+	img(params: { src: string; alt: string; class?: string }) {
+		this.list.push({ type: 'block:img', ...params });
+		return this;
+	}
+	ol(params: { items: InlineList[]; class?: string }) {
+		this.list.push({ type: 'block:ol', ...params });
+		return this;
+	}
+	ul(params: { items: InlineList[]; class?: string }) {
+		this.list.push({ type: 'block:ul', ...params });
+		return this;
+	}
+	quote(params: { inlines: InlineList; author?: string; href?: string }) {
+		return this;
+	}
+	table(params: { header: InlineList[]; data: Array<InlineList[]> }) {
+		return this;
+	}
+	note(params: { blocks: BlockList }) {
+		this.list.push({ type: 'block:note', ...params });
+		return this;
+	}
+	tip(params: { blocks: BlockList }) {
+		this.list.push({ type: 'block:tip', ...params });
+		return this;
+	}
+	important(params: { blocks: BlockList }) {
+		this.list.push({ type: 'block:important', ...params });
+		return this;
+	}
+	warning(params: { blocks: BlockList }) {
+		this.list.push({ type: 'block:warning', ...params });
+		return this;
+	}
+	caution(params: { blocks: BlockList }) {
+		this.list.push({ type: 'block:caution', ...params });
+		return this;
+	}
+}
+
 class Post {
 	h1 = '';
 	slug: string;
@@ -32,88 +115,6 @@ class Post {
 	toJSON() {}
 }
 
-class BlockList {
-	blocks: unknown[] = [];
-
-	p(params: { inlines: InlineList; class?: string }) {
-		this.blocks.push({ type: 'block:p', ...params });
-		return this;
-	}
-	h2(params: { inlines: InlineList; class?: string }) {
-		this.blocks.push({ type: 'block:h2', ...params });
-		return this;
-	}
-	h3(params: { inlines: InlineList; class?: string }) {
-		this.blocks.push({ type: 'block:h3', ...params });
-		return this;
-	}
-	code(params: {
-		lang: 'js' | 'html' | 'svelte';
-		code: string;
-		line_numbers?: boolean;
-		highlight?: number[];
-		file_name?: string;
-	}) {
-		this.blocks.push({ type: 'block:code', ...params });
-		return this;
-	}
-	img(params: { src: string; alt: string; class?: string }) {
-		this.blocks.push({ type: 'block:img', ...params });
-		return this;
-	}
-	ol(params: { items: InlineList[]; class?: string }) {
-		this.blocks.push({ type: 'block:ol', ...params });
-		return this;
-	}
-	ul(params: { items: InlineList[]; class?: string }) {
-		this.blocks.push({ type: 'block:ul', ...params });
-		return this;
-	}
-	quote(params: { inlines: InlineList; author?: string; href?: string }) {
-		return this;
-	}
-	table(params: { header: InlineList[]; data: Array<InlineList[]> }) {
-		return this;
-	}
-	note(params: { blocks: BlockList }) {
-		this.blocks.push({ type: 'block:note', ...params });
-		return this;
-	}
-	tip(params: { blocks: BlockList }) {
-		this.blocks.push({ type: 'block:tip', ...params });
-		return this;
-	}
-	important(params: { blocks: BlockList }) {
-		this.blocks.push({ type: 'block:important', ...params });
-		return this;
-	}
-	warning(params: { blocks: BlockList }) {
-		this.blocks.push({ type: 'block:warning', ...params });
-		return this;
-	}
-	caution(params: { blocks: BlockList }) {
-		this.blocks.push({ type: 'block:caution', ...params });
-		return this;
-	}
-}
-
-class InlineList {
-	inlines: unknown[] = [];
-
-	text(text: string) {
-		this.inlines.push(text);
-		return this;
-	}
-	link(text: string, href: `https://${string}`, opts?: { class?: string }) {
-		this.inlines.push({ type: 'inline:link', text, href, ...opts });
-		return this;
-	}
-	strong(text: string, opts?: { class?: string }) {
-		this.inlines.push({ type: 'inline:strong', text, ...opts });
-		return this;
-	}
-}
-
 const post = new Post({
 	h1: 'First post',
 	slug: 'first-post',
@@ -137,5 +138,14 @@ const post = new Post({
 				new InlineList().text('Vue'),
 				new InlineList().text('Solid')
 			]
+		})
+		.note({
+			blocks: new BlockList()
+				.p({
+					inlines: new InlineList()
+						.text('systemd portable services')
+						.link('Google', 'https://google.com')
+				})
+				.code({ lang: 'js', code: '' })
 		})
 });
