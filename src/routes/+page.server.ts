@@ -1,7 +1,9 @@
-import type { PageServerLoad } from "./$types";
+import type { PageServerLoad } from './$types';
 
-import { articles } from "$lib/content.server";
+import { post } from '$lib/content/post';
 
 export const load: PageServerLoad = async (event) => {
-
+	return {
+		post: JSON.stringify(post)
+	};
 };

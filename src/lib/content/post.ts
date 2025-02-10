@@ -1,17 +1,17 @@
 class Nodes {
-	list: unknown[] = [];
+	nodes: unknown[] = [];
 
 	// Block nodes
-	p(params: { nodes: Nodes; class?: string }) {
-		this.list.push({ type: 'block:p', ...params });
+	p(params: { children: Nodes; class?: string }) {
+		this.nodes.push({ type: 'block:p', ...params });
 		return this;
 	}
-	h2(params: { nodes: Nodes; class?: string }) {
-		this.list.push({ type: 'block:h2', ...params });
+	h2(params: { children: Nodes; class?: string }) {
+		this.nodes.push({ type: 'block:h2', ...params });
 		return this;
 	}
-	h3(params: { nodes: Nodes; class?: string }) {
-		this.list.push({ type: 'block:h3', ...params });
+	h3(params: { children: Nodes; class?: string }) {
+		this.nodes.push({ type: 'block:h3', ...params });
 		return this;
 	}
 	precode(params: {
@@ -22,82 +22,82 @@ class Nodes {
 		highlight?: number[];
 		file_name?: string;
 	}) {
-		this.list.push({ type: 'block:code', ...params });
+		this.nodes.push({ type: 'block:code', ...params });
 		return this;
 	}
 	img(params: { src: string; alt: string; class?: string }) {
-		this.list.push({ type: 'block:img', ...params });
+		this.nodes.push({ type: 'block:img', ...params });
 		return this;
 	}
-	ol(params: { nodes: Nodes; class?: string }) {
-		this.list.push({ type: 'block:ol', ...params });
+	ol(params: { children: Nodes; class?: string }) {
+		this.nodes.push({ type: 'block:ol', ...params });
 		return this;
 	}
-	ul(params: { nodes: Nodes; class?: string }) {
-		this.list.push({ type: 'block:ul', ...params });
+	ul(params: { children: Nodes; class?: string }) {
+		this.nodes.push({ type: 'block:ul', ...params });
 		return this;
 	}
-	li(params: { nodes: Nodes | Nodes; class?: string }) {
-		this.list.push({ type: 'block:li', ...params });
+	li(params: { children: Nodes | Nodes; class?: string }) {
+		this.nodes.push({ type: 'block:li', ...params });
 		return this;
 	}
-	blockquote(params: { nodes: Nodes; cite?: string }) {
+	blockquote(params: { children: Nodes; cite?: string }) {
 		return this;
 	}
 	table(params: { header: (Nodes | Nodes)[]; data: Array<Nodes[]> }) {
 		return this;
 	}
-	note(params: { nodes: Nodes }) {
-		this.list.push({ type: 'block:note', ...params });
+	note(params: { children: Nodes }) {
+		this.nodes.push({ type: 'block:note', ...params });
 		return this;
 	}
-	tip(params: { nodes: Nodes }) {
-		this.list.push({ type: 'block:tip', ...params });
+	tip(params: { children: Nodes }) {
+		this.nodes.push({ type: 'block:tip', ...params });
 		return this;
 	}
-	important(params: { nodes: Nodes }) {
-		this.list.push({ type: 'block:important', ...params });
+	important(params: { children: Nodes }) {
+		this.nodes.push({ type: 'block:important', ...params });
 		return this;
 	}
-	warning(params: { nodes: Nodes }) {
-		this.list.push({ type: 'block:warning', ...params });
+	warning(params: { children: Nodes }) {
+		this.nodes.push({ type: 'block:warning', ...params });
 		return this;
 	}
-	caution(params: { nodes: Nodes }) {
-		this.list.push({ type: 'block:caution', ...params });
+	caution(params: { children: Nodes }) {
+		this.nodes.push({ type: 'block:caution', ...params });
 		return this;
 	}
-	details(params: { nodes: Nodes }) {
-		this.list.push({ type: 'block:details', ...params });
+	details(params: { children: Nodes }) {
+		this.nodes.push({ type: 'block:details', ...params });
 		return this;
 	}
-	summary(params: { nodes: Nodes }) {
-		this.list.push({ type: 'block:summary', ...params });
+	summary(params: { children: Nodes }) {
+		this.nodes.push({ type: 'block:summary', ...params });
 		return this;
 	}
 	// Inline nodes
 	text(text: string) {
-		this.list.push(text);
+		this.nodes.push(text);
 		return this;
 	}
 	link(text: string, href: `https://${string}`, opts?: { class?: string }) {
-		this.list.push({ type: 'inline:link', text, href, ...opts });
+		this.nodes.push({ type: 'inline:link', text, href, ...opts });
 		return this;
 	}
 	strong(text: string, opts?: { class?: string }) {
-		this.list.push({ type: 'inline:strong', text, ...opts });
+		this.nodes.push({ type: 'inline:strong', text, ...opts });
 		return this;
 	}
 	cite(text: string, opts?: { class?: string }) {
-		this.list.push({ type: 'inline:cite', text, ...opts });
+		this.nodes.push({ type: 'inline:cite', text, ...opts });
 		return this;
 	}
 	code(text: string, opts?: { class?: string }) {
-		this.list.push({ type: 'inline:code', text, ...opts });
+		this.nodes.push({ type: 'inline:code', text, ...opts });
 		return this;
 	}
 	kbd(text: string, opts?: { class?: string }) {
-		this.list.push({ type: 'inline:kbd', text, ...opts });
+		this.nodes.push({ type: 'inline:kbd', text, ...opts });
 		return this;
 	}
 }
@@ -132,8 +132,6 @@ class Post {
 			this.nodes = params.nodes;
 		}
 	}
-
-	toJSON() {}
 }
 
 const post = new Post({
@@ -142,7 +140,7 @@ const post = new Post({
 	nodes: new Nodes()
 		.p({
 			class: 'text-white',
-			nodes: new Nodes()
+			children: new Nodes()
 				.text(
 					`This repository contains a GitHub workflow with a build job that builds
 					your SvelteKit app into a very minimal systemd portable service and a
@@ -154,24 +152,24 @@ const post = new Post({
 				.link('Svelte', 'https://svelte.dev')
 		})
 		.h2({
-			nodes: new Nodes().text('How to use This')
+			children: new Nodes().text('How to use This')
 		})
 		.p({
-			nodes: new Nodes().text('To use this repository, you have two options:')
+			children: new Nodes().text('To use this repository, you have two options:')
 		})
 		.ol({
-			nodes: new Nodes()
+			children: new Nodes()
 				.li({
-					nodes: new Nodes().link('Use it as a template', 'https://')
+					children: new Nodes().link('Use it as a template', 'https://')
 				})
 				.li({
-					nodes: new Nodes().text('Start from scratch:').ul({
-						nodes: new Nodes()
+					children: new Nodes().text('Start from scratch:').ul({
+						children: new Nodes()
 							.li({
-								nodes: new Nodes().text('Create a new SvelteKit project using')
+								children: new Nodes().text('Create a new SvelteKit project using')
 							})
 							.li({
-								nodes: new Nodes().text('Create a new SvelteKit project using')
+								children: new Nodes().text('Create a new SvelteKit project using')
 							})
 					})
 				})
@@ -185,25 +183,31 @@ const post = new Post({
 			code: 'console.log("Hello")'
 		})
 		.h2({
-			nodes: new Nodes().text('The best JavaScript frameworks')
+			children: new Nodes().text('The best JavaScript frameworks')
 		})
 		.ol({
-			nodes: new Nodes()
+			children: new Nodes()
 				.li({
-					nodes: new Nodes().text('Svelte')
+					children: new Nodes().text('Svelte')
 				})
 				.li({
-					nodes: new Nodes().text('Vue')
+					children: new Nodes().text('Vue')
 				})
 				.li({
-					nodes: new Nodes().text('Solid')
+					children: new Nodes().text('Solid')
 				})
 		})
 		.note({
-			nodes: new Nodes()
+			children: new Nodes()
 				.p({
-					nodes: new Nodes().text('systemd portable services').link('Google', 'https://google.com')
+					children: new Nodes()
+						.text('systemd portable services')
+						.link('Google', 'https://google.com')
 				})
 				.precode({ lang: 'js', code: '' })
 		})
 });
+
+console.log(JSON.stringify(post, null, 2));
+
+export { post };
