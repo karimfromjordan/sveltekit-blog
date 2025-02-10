@@ -98,9 +98,9 @@ class BlockList {
 }
 
 class InlineList {
-	inlines = [];
+	inlines: unknown[] = [];
 
-	text(text: string, opts?: { class?: string }) {
+	text(text: string) {
 		this.inlines.push(text);
 		return this;
 	}
