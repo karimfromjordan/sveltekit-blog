@@ -153,7 +153,7 @@ const post = new Post({
 			children: new NodeArray().text('How to use This')
 		})
 		.p({
-			children: new NodeArray().text('To use this repository, you have two options:')
+			children: new NodeArray().text('To use this repository, you have two options:').
 		})
 		.ol({
 			children: new NodeArray()
