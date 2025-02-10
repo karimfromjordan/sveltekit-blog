@@ -128,4 +128,14 @@ const post = new Post({
 			lang: 'js',
 			code: 'console.log("Hello")'
 		})
+		.h2({
+			inlines: new InlineList().text('The best JavaScript frameworks')
+		})
+		.ol({
+			items: [
+				new InlineList().text('Svelte'),
+				new InlineList().text('Vue'),
+				new InlineList().text('Solid')
+			]
+		})
 });
