@@ -125,6 +125,10 @@ const post = new Post({
 				.text('Svelte is a major JavaScript framework with a great community. Check it our at')
 				.link('Svelte', 'https://svelte.dev')
 		})
+		.img({
+			src: '',
+			alt: ''
+		})
 		.code({
 			lang: 'js',
 			code: 'console.log("Hello")'
