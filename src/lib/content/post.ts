@@ -14,7 +14,7 @@ class Nodes {
 		this.list.push({ type: 'block:h3', ...params });
 		return this;
 	}
-	codeBlock(params: {
+	codepre(params: {
 		lang: 'js' | 'html' | 'svelte';
 		code: string;
 		copy?: string;
@@ -65,6 +65,14 @@ class Nodes {
 	}
 	caution(params: { nodes: Nodes }) {
 		this.list.push({ type: 'block:caution', ...params });
+		return this;
+	}
+	details(params: { nodes: Nodes }) {
+		this.list.push({ type: 'block:details', ...params });
+		return this;
+	}
+	summary(params: { nodes: Nodes }) {
+		this.list.push({ type: 'block:summary', ...params });
 		return this;
 	}
 	// Inline nodes
