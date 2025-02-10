@@ -14,7 +14,7 @@ class Nodes {
 		this.list.push({ type: 'block:h3', ...params });
 		return this;
 	}
-	codepre(params: {
+	precode(params: {
 		lang: 'js' | 'html' | 'svelte';
 		code: string;
 		copy?: string;
