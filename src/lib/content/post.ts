@@ -180,7 +180,7 @@ const post = new Post({
 			src: '',
 			alt: ''
 		})
-		.code({
+		.precode({
 			lang: 'js',
 			code: 'console.log("Hello")'
 		})
@@ -204,6 +204,6 @@ const post = new Post({
 				.p({
 					nodes: new Nodes().text('systemd portable services').link('Google', 'https://google.com')
 				})
-				.code({ lang: 'js', code: '' })
+				.precode({ lang: 'js', code: '' })
 		})
 });
