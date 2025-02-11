@@ -125,6 +125,24 @@ class Search extends BlockNode {
 		return 'search';
 	}
 }
+class Details extends BlockNode {
+	constructor(params) {
+		super(params);
+	}
+
+	get tag() {
+		return 'div';
+	}
+}
+class Summary extends BlockNode {
+	constructor(params) {
+		super(params);
+	}
+
+	get tag() {
+		return 'div';
+	}
+}
 class Div extends BlockNode {
 	constructor(params) {
 		super(params);
@@ -280,12 +298,12 @@ class NodeArray extends Array {
 		this.push({ tag: 'blockquote', ...params });
 		return this;
 	}
-	details(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
-		this.push({ tag: 'details', ...params });
+	details(params) {
+		this.push(new Details(params));
 		return this;
 	}
-	summary(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
-		this.push({ tag: 'summary', ...params });
+	summary(params) {
+		this.push(new Summary(params));
 		return this;
 	}
 	table(params: { children: Array<NodeArray[]> }) {
