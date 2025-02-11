@@ -54,23 +54,42 @@ class Text extends InlineNode {
 	}
 }
 class Link extends InlineNode {
-	constructor(text: string) {
+	href;
+
+	constructor(text: string, href: string) {
 		super(text);
+		this.href = href;
+	}
+
+	get tag() {
+		return 'a';
 	}
 }
 class Strong extends InlineNode {
 	constructor(text: string) {
 		super(text);
 	}
+
+	get tag() {
+		return 'strong';
+	}
 }
 class Cite extends InlineNode {
 	constructor(text: string) {
 		super(text);
 	}
+
+	get tag() {
+		return 'cite';
+	}
 }
 class KBD extends InlineNode {
 	constructor(text: string) {
 		super(text);
+	}
+
+	get tag() {
+		return 'kbd';
 	}
 }
 
