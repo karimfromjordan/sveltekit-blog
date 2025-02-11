@@ -433,7 +433,7 @@ const page = new Page({
 		.ol({
 			children: new NodeArray()
 				.li({
-					children: new NodeArray().link('Use it as a template', 'https://')
+					children: new NodeArray().a('Use it as a template', 'https://')
 				})
 				.li({
 					children: new NodeArray().text('Start from scratch:').ul({
@@ -475,7 +475,7 @@ const page = new Page({
 				.p({
 					children: new NodeArray()
 						.text('systemd portable services')
-						.link('Google', 'https://google.com')
+						.a('Google', 'https://google.com')
 				})
 				.precode({ lang: 'js', code: '' })
 		})
