@@ -38,13 +38,76 @@ class InlineNode {
 	}
 }
 
-class Article extends BlockNode {
-	constructor(params) {
+class Header extends BlockNode {
+	aria_label;
+
+	constructor(params: { aria_label?: string }) {
 		super(params);
+		this.aria_label = params.aria_label;
+	}
+
+	get tag() {
+		return 'header';
+	}
+}
+class Footer extends BlockNode {
+	aria_label;
+
+	constructor(params: { aria_label?: string }) {
+		super(params);
+		this.aria_label = params.aria_label;
+	}
+
+	get tag() {
+		return 'footer';
+	}
+}
+class Main extends BlockNode {
+	aria_label;
+
+	constructor(params: { aria_label?: string }) {
+		super(params);
+		this.aria_label = params.aria_label;
+	}
+
+	get tag() {
+		return 'main';
+	}
+}
+class Article extends BlockNode {
+	aria_label;
+
+	constructor(params: { aria_label?: string }) {
+		super(params);
+		this.aria_label = params.aria_label;
 	}
 
 	get tag() {
 		return 'article';
+	}
+}
+class Aside extends BlockNode {
+	aria_label;
+
+	constructor(params: { aria_label?: string }) {
+		super(params);
+		this.aria_label = params.aria_label;
+	}
+
+	get tag() {
+		return 'aside';
+	}
+}
+class Section extends BlockNode {
+	aria_label;
+
+	constructor(params: { aria_label?: string }) {
+		super(params);
+		this.aria_label = params.aria_label;
+	}
+
+	get tag() {
+		return 'section';
 	}
 }
 
@@ -132,6 +195,18 @@ class NodeArray extends Array {
 	}
 
 	// sectioning
+	header(params) {
+		this.push(new Header(params));
+		return this;
+	}
+	footer(params) {
+		this.push(new Footer(params));
+		return this;
+	}
+	main(params) {
+		this.push(new Main(params));
+		return this;
+	}
 	article(params) {
 		this.push(new Article(params));
 		return this;
@@ -186,6 +261,9 @@ class NodeArray extends Array {
 		this.push({ tag: 'summary', ...params });
 		return this;
 	}
+	table(params: { children: Array<NodeArray[]> }) {
+		return this;
+	}
 	precode(params: {
 		lang: 'js' | 'html' | 'svelte';
 		code: string;
@@ -195,9 +273,6 @@ class NodeArray extends Array {
 		file_name?: string;
 	}) {
 		this.push({ type: 'block:code', ...params });
-		return this;
-	}
-	table(params: { children: Array<NodeArray[]> }) {
 		return this;
 	}
 	note(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
