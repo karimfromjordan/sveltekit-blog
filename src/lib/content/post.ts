@@ -194,7 +194,6 @@ class NodeArray extends Array {
 		this.metadata = params?.metadata;
 	}
 
-	// sectioning
 	header(params) {
 		this.push(new Header(params));
 		return this;
@@ -211,12 +210,12 @@ class NodeArray extends Array {
 		this.push(new Article(params));
 		return this;
 	}
-	aside(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
-		this.push({ tag: 'aside', ...params });
+	aside(params) {
+		this.push(new Aside(params));
 		return this;
 	}
-	section(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
-		this.push({ tag: 'section', ...params });
+	section(params) {
+		this.push(new Section(params));
 		return this;
 	}
 	// typography
