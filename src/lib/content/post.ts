@@ -422,7 +422,7 @@ const page = new Page({
 					a Node.js executable and glibc++. The total size of the final image
 					is approximately 37 MB.`
 				)
-				.link('Svelte', 'https://svelte.dev')
+				.a('Svelte', 'https://svelte.dev')
 		})
 		.h2({
 			children: new NodeArray().text('How to use This')
