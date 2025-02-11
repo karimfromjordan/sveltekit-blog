@@ -72,44 +72,59 @@ class Text {
 }
 
 class NodeArray extends Array {
-	section() {
-
+	// sectioning
+	article(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
+		this.push({ tag: 'article', ...params });
+		return this;
 	}
-
-	h2(params: { children: NodeArray; class?: string }) {
+	aside(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
+		this.push({ tag: 'aside', ...params });
+		return this;
+	}
+	section(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
+		this.push({ tag: 'section', ...params });
+		return this;
+	}
+	// typography
+	h2(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
 		this.push({ tag: 'h2', ...params });
 		return this;
 	}
-	h3(params: { children: NodeArray; class?: string }) {
+	h3(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
 		this.push({ tag: 'h3', ...params });
 		return this;
 	}
 	// Block nodes
-	p(params: { children: NodeArray; class?: string }) {
+	p(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
 		this.push({ tag: 'p', ...params });
 		return this;
 	}
-	ol(params: { children: NodeArray; class?: string }) {
+	ol(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
 		this.push({ tag: 'ol', ...params });
 		return this;
 	}
-	ul(params: { children: NodeArray; class?: string }) {
+	ul(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
 		this.push({ tag: 'ul', ...params });
 		return this;
 	}
-	li(params: { children: NodeArray; class?: string }) {
+	li(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
 		this.push({ tag: 'li', ...params });
 		return this;
 	}
-	blockquote(params: { children: NodeArray; cite?: string; class?: string }) {
+	blockquote(params: {
+		children: NodeArray;
+		cite?: string;
+		class?: string;
+		data?: Record<string, string>;
+	}) {
 		this.push({ tag: 'blockquote', ...params });
 		return this;
 	}
-	details(params: { children: NodeArray }) {
+	details(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
 		this.push({ tag: 'details', ...params });
 		return this;
 	}
-	summary(params: { children: NodeArray }) {
+	summary(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
 		this.push({ tag: 'summary', ...params });
 		return this;
 	}
@@ -124,26 +139,26 @@ class NodeArray extends Array {
 		this.push({ type: 'block:code', ...params });
 		return this;
 	}
-	table(params: { header: (NodeArray | NodeArray)[]; data: Array<NodeArray[]> }) {
+	table(params: { children: Array<NodeArray[]> }) {
 		return this;
 	}
-	note(params: { children: NodeArray }) {
+	note(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
 		this.push({ type: 'block:note', ...params });
 		return this;
 	}
-	tip(params: { children: NodeArray }) {
+	tip(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
 		this.push({ type: 'block:tip', ...params });
 		return this;
 	}
-	important(params: { children: NodeArray }) {
+	important(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
 		this.push({ type: 'block:important', ...params });
 		return this;
 	}
-	warning(params: { children: NodeArray }) {
+	warning(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
 		this.push({ type: 'block:warning', ...params });
 		return this;
 	}
-	caution(params: { children: NodeArray }) {
+	caution(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
 		this.push({ type: 'block:caution', ...params });
 		return this;
 	}
