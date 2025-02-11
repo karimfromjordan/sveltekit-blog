@@ -79,8 +79,12 @@ class Anchor extends InlineNode {
 	}
 }
 class Strong extends InlineNode {
-	constructor(text: string) {
-		super(text);
+	class;
+
+	constructor(params: { text: string; class?: string[] }) {
+		super(params.text);
+
+		this.class = params.class;
 	}
 
 	get tag() {
@@ -88,8 +92,12 @@ class Strong extends InlineNode {
 	}
 }
 class Cite extends InlineNode {
-	constructor(text: string) {
-		super(text);
+	class;
+
+	constructor(params: { text: string; class?: string[] }) {
+		super(params.text);
+
+		this.class = params.class;
 	}
 
 	get tag() {
@@ -97,8 +105,12 @@ class Cite extends InlineNode {
 	}
 }
 class KBD extends InlineNode {
-	constructor(text: string) {
-		super(text);
+	class;
+
+	constructor(params: { text: string; class?: string[] }) {
+		super(params.text);
+
+		this.class = params.class;
 	}
 
 	get tag() {
@@ -231,19 +243,19 @@ class NodeArray extends Array {
 		return this;
 	}
 	strong(text: string, opts?: { class?: string[] }) {
-		this.push({ tag: 'strong', text, ...opts });
+		this.push(new Strong({ text, ...opts }));
 		return this;
 	}
 	cite(text: string, opts?: { class?: string[] }) {
-		this.push({ tag: 'cite', text, ...opts });
+		this.push(new Cite({ text, ...opts }));
 		return this;
 	}
 	code(text: string, opts?: { class?: string[] }) {
-		this.push({ tag: 'code', text, ...opts });
+		this.push(new Code({ text, ...opts }));
 		return this;
 	}
 	kbd(text: string, opts?: { class?: string[] }) {
-		this.push({ tag: 'kbd', text, ...opts });
+		this.push(new KBD({ text, ...opts }));
 		return this;
 	}
 }
