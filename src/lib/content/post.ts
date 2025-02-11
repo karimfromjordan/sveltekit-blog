@@ -113,6 +113,18 @@ class Section extends BlockNode {
 		return 'section';
 	}
 }
+class Search extends BlockNode {
+	aria_label;
+
+	constructor(params: { aria_label?: string }) {
+		super(params);
+		this.aria_label = params.aria_label;
+	}
+
+	get tag() {
+		return 'search';
+	}
+}
 class Div extends BlockNode {
 	constructor(params) {
 		super(params);
@@ -228,6 +240,10 @@ class NodeArray extends Array {
 	}
 	section(params) {
 		this.push(new Section(params));
+		return this;
+	}
+	search(params) {
+		this.push(new Search(params));
 		return this;
 	}
 	// typography
