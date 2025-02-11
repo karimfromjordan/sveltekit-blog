@@ -53,12 +53,24 @@ class Text extends InlineNode {
 		super(text);
 	}
 }
-class Link extends InlineNode {
+class Anchor extends InlineNode {
 	href;
+	target;
+	download;
 
-	constructor(text: string, href: string) {
-		super(text);
+	constructor(params: {
+		text: string;
+		href: string;
+		target?: '_blank';
+		download?: boolean;
+		class: string[];
+	}) {
+		super(params.text);
+
 		this.href = href;
+		this.target = opts.target;
+		this.download = opts.download;
+		this.class = opts.class;
 	}
 
 	get tag() {
@@ -209,8 +221,8 @@ class NodeArray extends Array {
 		this.push(new Text(params));
 		return this;
 	}
-	link(text: string, href: `https://${string}`, opts?: { class?: string }) {
-		this.push({ tag: 'a', text, href, ...opts });
+	a(text: string, href: `https://${string}`, opts?: { class?: string }) {
+		this.push(new Anchor({ text, href, ...opts }));
 		return this;
 	}
 	strong(text: string, opts?: { class?: string }) {
