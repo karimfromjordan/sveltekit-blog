@@ -94,7 +94,6 @@ class NodeArray extends Array {
 		this.push({ tag: 'h3', ...params });
 		return this;
 	}
-	// Block nodes
 	p(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
 		this.push({ tag: 'p', ...params });
 		return this;
@@ -203,9 +202,9 @@ class NodeArray extends Array {
 	}
 }
 
-const post = new Page({
-	h1: 'First post',
-	slug: 'first-post',
+const page = new Page({
+	h1: 'First page',
+	slug: 'first-page',
 	nodes: new NodeArray()
 		.p({
 			class: 'text-white',
@@ -243,7 +242,7 @@ const post = new Page({
 					})
 				})
 		})
-		.img({
+		.image({
 			src: '',
 			alt: ''
 		})
@@ -277,6 +276,6 @@ const post = new Page({
 		})
 });
 
-console.log(JSON.stringify(post, null, 2));
+console.log(JSON.stringify(page, null, 2));
 
-export { post };
+export { page };
