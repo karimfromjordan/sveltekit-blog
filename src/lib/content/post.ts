@@ -47,17 +47,15 @@ class Precode {
 		highlight?: number[];
 		file_name?: string;
 	}) {
-		this.lang = params.lang
-		this.code = params.code
-		this.copy = params.copy
-		this.line_numbers = params.line_numbers
-		this.highlight = params.highlight
-		this.file_name = params.file_name
+		this.lang = params.lang;
+		this.code = params.code;
+		this.copy = params.copy;
+		this.line_numbers = params.line_numbers;
+		this.highlight = params.highlight;
+		this.file_name = params.file_name;
 	}
 
-	toHTML() {
-		const html =
-	}
+	toHTML() {}
 }
 
 class Text {
@@ -74,17 +72,33 @@ class Text {
 }
 
 class NodeArray extends Array {
-	// Block nodes
-	p(params: { children: NodeArray; class?: string }) {
-		this.push({ tag: 'p', ...params });
-		return this;
-	}
 	h2(params: { children: NodeArray; class?: string }) {
 		this.push({ tag: 'h2', ...params });
 		return this;
 	}
 	h3(params: { children: NodeArray; class?: string }) {
 		this.push({ tag: 'h3', ...params });
+		return this;
+	}
+	// Block nodes
+	p(params: { children: NodeArray; class?: string }) {
+		this.push({ tag: 'p', ...params });
+		return this;
+	}
+	ol(params: { children: NodeArray; class?: string }) {
+		this.push({ tag: 'ol', ...params });
+		return this;
+	}
+	ul(params: { children: NodeArray; class?: string }) {
+		this.push({ tag: 'ul', ...params });
+		return this;
+	}
+	li(params: { children: NodeArray; class?: string }) {
+		this.push({ tag: 'li', ...params });
+		return this;
+	}
+	blockquote(params: { children: NodeArray; cite?: string; class?: string }) {
+		this.push({ tag: 'blockquote', ...params });
 		return this;
 	}
 	precode(params: {
@@ -100,21 +114,6 @@ class NodeArray extends Array {
 	}
 	img(params: { src: string; alt: string; class?: string }) {
 		this.push({ type: 'block:img', ...params });
-		return this;
-	}
-	ol(params: { children: NodeArray; class?: string }) {
-		this.push({ tag: 'ol', ...params });
-		return this;
-	}
-	ul(params: { children: NodeArray; class?: string }) {
-		this.push({ tag: 'ul', ...params });
-		return this;
-	}
-	li(params: { children: NodeArray | NodeArray; class?: string }) {
-		this.push({ tag: 'li', ...params });
-		return this;
-	}
-	blockquote(params: { children: NodeArray; cite?: string }) {
 		return this;
 	}
 	table(params: { header: (NodeArray | NodeArray)[]; data: Array<NodeArray[]> }) {
