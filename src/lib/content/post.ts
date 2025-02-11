@@ -10,7 +10,7 @@ class BlockNode {
 	constructor(params: {
 		children: NodeArray;
 		id?: string;
-		class?: string;
+		class?: string[];
 		data: Record<string, string>;
 		metadata: unknown;
 	}) {
