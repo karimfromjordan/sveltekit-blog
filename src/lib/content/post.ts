@@ -1,6 +1,6 @@
 import { codeToHtml } from 'shiki';
 
-class Post {
+class Page {
 	h1 = '';
 	slug: string;
 	description?: string = undefined;
@@ -72,6 +72,10 @@ class Text {
 }
 
 class NodeArray extends Array {
+	section() {
+
+	}
+
 	h2(params: { children: NodeArray; class?: string }) {
 		this.push({ tag: 'h2', ...params });
 		return this;
@@ -101,6 +105,14 @@ class NodeArray extends Array {
 		this.push({ tag: 'blockquote', ...params });
 		return this;
 	}
+	details(params: { children: NodeArray }) {
+		this.push({ tag: 'details', ...params });
+		return this;
+	}
+	summary(params: { children: NodeArray }) {
+		this.push({ tag: 'summary', ...params });
+		return this;
+	}
 	precode(params: {
 		lang: 'js' | 'html' | 'svelte';
 		code: string;
@@ -110,10 +122,6 @@ class NodeArray extends Array {
 		file_name?: string;
 	}) {
 		this.push({ type: 'block:code', ...params });
-		return this;
-	}
-	img(params: { src: string; alt: string; class?: string }) {
-		this.push({ type: 'block:img', ...params });
 		return this;
 	}
 	table(params: { header: (NodeArray | NodeArray)[]; data: Array<NodeArray[]> }) {
@@ -139,15 +147,21 @@ class NodeArray extends Array {
 		this.push({ type: 'block:caution', ...params });
 		return this;
 	}
-	details(params: { children: NodeArray }) {
-		this.push({ tag: 'details', ...params });
+	// media
+	image(params: { src: string; alt: string; class?: string }) {
+		this.push({ type: 'block:img', ...params });
 		return this;
 	}
-	summary(params: { children: NodeArray }) {
-		this.push({ tag: 'summary', ...params });
+	youtube(params) {
 		return this;
 	}
-	// Inline nodes
+	bluesky(params) {
+		return this;
+	}
+	twitter(params) {
+		return this;
+	}
+	// inline
 	text(params) {
 		this.push(new Text(params));
 		return this;
@@ -174,7 +188,7 @@ class NodeArray extends Array {
 	}
 }
 
-const post = new Post({
+const post = new Page({
 	h1: 'First post',
 	slug: 'first-post',
 	nodes: new NodeArray()
