@@ -98,8 +98,8 @@ class KBD extends InlineNode {
 
 class NodeArray extends Array {
 	// sectioning
-	article(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
-		this.push({ tag: 'article', ...params });
+	article(params) {
+		this.push(new Article(params));
 		return this;
 	}
 	aside(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
