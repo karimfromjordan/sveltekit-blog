@@ -306,24 +306,24 @@ class NodeArray extends Array {
 		this.push({ type: 'block:code', ...params });
 		return this;
 	}
-	note(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
-		this.push({ type: 'block:note', ...params });
+	note(params) {
+		this.push(new Div(params));
 		return this;
 	}
-	tip(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
-		this.push({ type: 'block:tip', ...params });
+	tip(params) {
+		this.push(new Div(params));
 		return this;
 	}
-	important(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
-		this.push({ type: 'block:important', ...params });
+	important(params) {
+		this.push(new Div(params));
 		return this;
 	}
-	warning(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
-		this.push({ type: 'block:warning', ...params });
+	warning(params) {
+		this.push(new Div(params));
 		return this;
 	}
-	caution(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
-		this.push({ type: 'block:caution', ...params });
+	caution(params) {
+		this.push(new Div(params));
 		return this;
 	}
 	// media
