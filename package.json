@@ -35,5 +35,8 @@
 		"onlyBuiltDependencies": [
 			"esbuild"
 		]
+	},
+	"dependencies": {
+		"shiki": "^2.3.2"
 	}
 }

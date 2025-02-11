@@ -1,104 +1,4 @@
-class NodeArray extends Array {
-	// Block nodes
-	p(params: { children: NodeArray; class?: string }) {
-		this.push({ type: 'block:p', ...params });
-		return this;
-	}
-	h2(params: { children: NodeArray; class?: string }) {
-		this.push({ type: 'block:h2', ...params });
-		return this;
-	}
-	h3(params: { children: NodeArray; class?: string }) {
-		this.push({ type: 'block:h3', ...params });
-		return this;
-	}
-	precode(params: {
-		lang: 'js' | 'html' | 'svelte';
-		code: string;
-		copy?: string;
-		line_numbers?: boolean;
-		highlight?: number[];
-		file_name?: string;
-	}) {
-		this.push({ type: 'block:code', ...params });
-		return this;
-	}
-	img(params: { src: string; alt: string; class?: string }) {
-		this.push({ type: 'block:img', ...params });
-		return this;
-	}
-	ol(params: { children: NodeArray; class?: string }) {
-		this.push({ type: 'block:ol', ...params });
-		return this;
-	}
-	ul(params: { children: NodeArray; class?: string }) {
-		this.push({ type: 'block:ul', ...params });
-		return this;
-	}
-	li(params: { children: NodeArray | NodeArray; class?: string }) {
-		this.push({ type: 'block:li', ...params });
-		return this;
-	}
-	blockquote(params: { children: NodeArray; cite?: string }) {
-		return this;
-	}
-	table(params: { header: (NodeArray | NodeArray)[]; data: Array<NodeArray[]> }) {
-		return this;
-	}
-	note(params: { children: NodeArray }) {
-		this.push({ type: 'block:note', ...params });
-		return this;
-	}
-	tip(params: { children: NodeArray }) {
-		this.push({ type: 'block:tip', ...params });
-		return this;
-	}
-	important(params: { children: NodeArray }) {
-		this.push({ type: 'block:important', ...params });
-		return this;
-	}
-	warning(params: { children: NodeArray }) {
-		this.push({ type: 'block:warning', ...params });
-		return this;
-	}
-	caution(params: { children: NodeArray }) {
-		this.push({ type: 'block:caution', ...params });
-		return this;
-	}
-	details(params: { children: NodeArray }) {
-		this.push({ type: 'block:details', ...params });
-		return this;
-	}
-	summary(params: { children: NodeArray }) {
-		this.push({ type: 'block:summary', ...params });
-		return this;
-	}
-	// Inline nodes
-	text(text: string) {
-		this.push(text);
-		return this;
-	}
-	link(text: string, href: `https://${string}`, opts?: { class?: string }) {
-		this.push({ type: 'inline:link', text, href, ...opts });
-		return this;
-	}
-	strong(text: string, opts?: { class?: string }) {
-		this.push({ type: 'inline:strong', text, ...opts });
-		return this;
-	}
-	cite(text: string, opts?: { class?: string }) {
-		this.push({ type: 'inline:cite', text, ...opts });
-		return this;
-	}
-	code(text: string, opts?: { class?: string }) {
-		this.push({ type: 'inline:code', text, ...opts });
-		return this;
-	}
-	kbd(text: string, opts?: { class?: string }) {
-		this.push({ type: 'inline:kbd', text, ...opts });
-		return this;
-	}
-}
+import { codeToHtml } from 'shiki';
 
 class Post {
 	h1 = '';
@@ -130,6 +30,149 @@ class Post {
 			this.nodes = params.nodes;
 		}
 	}
+
+	fromJSON() {}
+
+	toHTML() {}
+}
+
+class Precode {
+	type = 'block:precode';
+
+	constructor(params: {
+		lang: 'js' | 'html' | 'svelte';
+		code: string;
+		copy?: string;
+		line_numbers?: boolean;
+		highlight?: number[];
+		file_name?: string;
+	}) {
+		this.lang = params.lang
+		this.code = params.code
+		this.copy = params.copy
+		this.line_numbers = params.line_numbers
+		this.highlight = params.highlight
+		this.file_name = params.file_name
+	}
+
+	toHTML() {
+		const html =
+	}
+}
+
+class Text {
+	type = 'inline:text';
+	text;
+
+	constructor(text: string) {
+		this.text = text;
+	}
+
+	toHTML() {
+		return this.text.replaceAll(/w/, ' ');
+	}
+}
+
+class NodeArray extends Array {
+	// Block nodes
+	p(params: { children: NodeArray; class?: string }) {
+		this.push({ tag: 'p', ...params });
+		return this;
+	}
+	h2(params: { children: NodeArray; class?: string }) {
+		this.push({ tag: 'h2', ...params });
+		return this;
+	}
+	h3(params: { children: NodeArray; class?: string }) {
+		this.push({ tag: 'h3', ...params });
+		return this;
+	}
+	precode(params: {
+		lang: 'js' | 'html' | 'svelte';
+		code: string;
+		copy?: string;
+		line_numbers?: boolean;
+		highlight?: number[];
+		file_name?: string;
+	}) {
+		this.push({ type: 'block:code', ...params });
+		return this;
+	}
+	img(params: { src: string; alt: string; class?: string }) {
+		this.push({ type: 'block:img', ...params });
+		return this;
+	}
+	ol(params: { children: NodeArray; class?: string }) {
+		this.push({ tag: 'ol', ...params });
+		return this;
+	}
+	ul(params: { children: NodeArray; class?: string }) {
+		this.push({ tag: 'ul', ...params });
+		return this;
+	}
+	li(params: { children: NodeArray | NodeArray; class?: string }) {
+		this.push({ tag: 'li', ...params });
+		return this;
+	}
+	blockquote(params: { children: NodeArray; cite?: string }) {
+		return this;
+	}
+	table(params: { header: (NodeArray | NodeArray)[]; data: Array<NodeArray[]> }) {
+		return this;
+	}
+	note(params: { children: NodeArray }) {
+		this.push({ type: 'block:note', ...params });
+		return this;
+	}
+	tip(params: { children: NodeArray }) {
+		this.push({ type: 'block:tip', ...params });
+		return this;
+	}
+	important(params: { children: NodeArray }) {
+		this.push({ type: 'block:important', ...params });
+		return this;
+	}
+	warning(params: { children: NodeArray }) {
+		this.push({ type: 'block:warning', ...params });
+		return this;
+	}
+	caution(params: { children: NodeArray }) {
+		this.push({ type: 'block:caution', ...params });
+		return this;
+	}
+	details(params: { children: NodeArray }) {
+		this.push({ tag: 'details', ...params });
+		return this;
+	}
+	summary(params: { children: NodeArray }) {
+		this.push({ tag: 'summary', ...params });
+		return this;
+	}
+	// Inline nodes
+	text(params) {
+		this.push(new Text(params));
+		return this;
+	}
+	link(text: string, href: `https://${string}`, opts?: { class?: string }) {
+		this.push({ tag: 'a', text, href, ...opts });
+		return this;
+	}
+	strong(text: string, opts?: { class?: string }) {
+		this.push({ tag: 'strong', text, ...opts });
+		return this;
+	}
+	cite(text: string, opts?: { class?: string }) {
+		this.push({ tag: 'cite', text, ...opts });
+		return this;
+	}
+	code(text: string, opts?: { class?: string }) {
+		this.push({ tag: 'code', text, ...opts });
+		return this;
+	}
+	kbd(text: string, opts?: { class?: string }) {
+		this.push({ tag: 'kbd', text, ...opts });
+		return this;
+	}
 }
 
 const post = new Post({
@@ -153,7 +196,7 @@ const post = new Post({
 			children: new NodeArray().text('How to use This')
 		})
 		.p({
-			children: new NodeArray().text('To use this repository, you have two options:').
+			children: new NodeArray().text('To use this repository, you have two options:')
 		})
 		.ol({
 			children: new NodeArray()
