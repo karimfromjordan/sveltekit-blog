@@ -23,13 +23,25 @@ class Precode {
 }
 
 class BlockNode {
+	children;
+	id;
+	class;
+	data;
+	metadata;
+
 	constructor(params: {
 		children: NodeArray;
 		id?: string;
 		class?: string;
 		data: Record<string, string>;
 		metadata: unknown;
-	}) {}
+	}) {
+		this.children = params.children;
+		this.id = params.id;
+		this.class = params.class;
+		this.data = params.data;
+		this.metadata = params.metadata;
+	}
 
 	get type() {
 		return 'block';
@@ -37,6 +49,8 @@ class BlockNode {
 }
 
 class InlineNode {
+	text;
+
 	constructor(text: string) {
 		this.text = text;
 	}
