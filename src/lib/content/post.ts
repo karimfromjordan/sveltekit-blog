@@ -75,6 +75,13 @@ class KBD extends InlineNode {
 }
 
 class NodeArray extends Array {
+	metadata;
+
+	constructor(params?: { metadata?: unknown }) {
+		super();
+		this.metadata = params?.metadata;
+	}
+
 	// sectioning
 	article(params) {
 		this.push(new Article(params));
