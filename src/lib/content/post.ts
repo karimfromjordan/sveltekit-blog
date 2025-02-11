@@ -110,6 +110,15 @@ class Section extends BlockNode {
 		return 'section';
 	}
 }
+class Div extends BlockNode {
+	constructor(params) {
+		super(params);
+	}
+
+	get tag() {
+		return 'div';
+	}
+}
 
 class Text extends InlineNode {
 	constructor(text: string) {
@@ -261,6 +270,10 @@ class NodeArray extends Array {
 		return this;
 	}
 	table(params: { children: Array<NodeArray[]> }) {
+		return this;
+	}
+	div(params) {
+		this.push(new Div(params));
 		return this;
 	}
 	precode(params: {
