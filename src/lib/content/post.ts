@@ -222,7 +222,11 @@ class NodeArray extends Array {
 		this.push(new Text(params));
 		return this;
 	}
-	a(text: string, href: `https://${string}`, opts?: { class?: string }) {
+	a(
+		text: string,
+		href: `https://${string}`,
+		opts?: { target?: '_blank'; download: boolean; class?: string[] }
+	) {
 		this.push(new Anchor({ text, href, ...opts }));
 		return this;
 	}
