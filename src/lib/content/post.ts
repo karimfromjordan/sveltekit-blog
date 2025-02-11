@@ -1,27 +1,5 @@
 import { codeToHtml } from 'shiki';
 
-class Precode {
-	type = 'block:precode';
-
-	constructor(params: {
-		lang: 'js' | 'html' | 'svelte';
-		code: string;
-		copy?: string;
-		line_numbers?: boolean;
-		highlight?: number[];
-		file_name?: string;
-	}) {
-		this.lang = params.lang;
-		this.code = params.code;
-		this.copy = params.copy;
-		this.line_numbers = params.line_numbers;
-		this.highlight = params.highlight;
-		this.file_name = params.file_name;
-	}
-
-	toHTML() {}
-}
-
 class BlockNode {
 	children;
 	id;
