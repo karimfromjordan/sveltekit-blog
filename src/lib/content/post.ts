@@ -83,10 +83,8 @@ class Strong extends InlineNode {
 
 	constructor(params: { text: string; class?: string[] }) {
 		super(params.text);
-
 		this.class = params.class;
 	}
-
 	get tag() {
 		return 'strong';
 	}
@@ -96,10 +94,8 @@ class Cite extends InlineNode {
 
 	constructor(params: { text: string; class?: string[] }) {
 		super(params.text);
-
 		this.class = params.class;
 	}
-
 	get tag() {
 		return 'cite';
 	}
@@ -109,10 +105,8 @@ class Code extends InlineNode {
 
 	constructor(params: { text: string; class?: string[] }) {
 		super(params.text);
-
 		this.class = params.class;
 	}
-
 	get tag() {
 		return 'code';
 	}
@@ -122,10 +116,8 @@ class KBD extends InlineNode {
 
 	constructor(params: { text: string; class?: string[] }) {
 		super(params.text);
-
 		this.class = params.class;
 	}
-
 	get tag() {
 		return 'kbd';
 	}
