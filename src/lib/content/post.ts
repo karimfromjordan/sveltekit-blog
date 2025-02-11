@@ -230,19 +230,19 @@ class NodeArray extends Array {
 		this.push(new Anchor({ text, href, ...opts }));
 		return this;
 	}
-	strong(text: string, opts?: { class?: string }) {
+	strong(text: string, opts?: { class?: string[] }) {
 		this.push({ tag: 'strong', text, ...opts });
 		return this;
 	}
-	cite(text: string, opts?: { class?: string }) {
+	cite(text: string, opts?: { class?: string[] }) {
 		this.push({ tag: 'cite', text, ...opts });
 		return this;
 	}
-	code(text: string, opts?: { class?: string }) {
+	code(text: string, opts?: { class?: string[] }) {
 		this.push({ tag: 'code', text, ...opts });
 		return this;
 	}
-	kbd(text: string, opts?: { class?: string }) {
+	kbd(text: string, opts?: { class?: string[] }) {
 		this.push({ tag: 'kbd', text, ...opts });
 		return this;
 	}
