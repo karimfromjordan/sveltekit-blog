@@ -1,41 +1,5 @@
 import { codeToHtml } from 'shiki';
 
-class Page {
-	h1 = '';
-	slug: string;
-	description?: string = undefined;
-	hero_img?: string = undefined;
-	published_at?: string = undefined;
-	updated_at?: string = undefined;
-
-	nodes = new NodeArray();
-
-	constructor(params: {
-		h1: string;
-		slug: string;
-		description?: string;
-		hero_img?: string;
-		published_at?: string;
-		updated_at?: string;
-		nodes?: NodeArray;
-	}) {
-		this.h1 = params.h1;
-		this.slug = params.slug;
-		this.description = params.description;
-		this.hero_img = params.hero_img;
-		this.published_at = params.published_at;
-		this.updated_at = params.updated_at;
-
-		if (params.nodes) {
-			this.nodes = params.nodes;
-		}
-	}
-
-	fromJSON() {}
-
-	toHTML() {}
-}
-
 class Precode {
 	type = 'block:precode';
 
@@ -58,16 +22,63 @@ class Precode {
 	toHTML() {}
 }
 
-class Text {
-	type = 'inline:text';
-	text;
+class BlockNode {
+	constructor(params: {
+		children: NodeArray;
+		id?: string;
+		class?: string;
+		data: Record<string, string>;
+		metadata: unknown;
+	}) {}
 
+	get type() {
+		return 'block';
+	}
+}
+
+class InlineNode {
 	constructor(text: string) {
 		this.text = text;
 	}
 
-	toHTML() {
-		return this.text.replaceAll(/w/, ' ');
+	get type() {
+		return 'inline';
+	}
+}
+
+class Article extends BlockNode {
+	constructor(params) {
+		super(params);
+	}
+
+	get tag() {
+		return 'article';
+	}
+}
+
+class Text extends InlineNode {
+	constructor(text: string) {
+		super(text);
+	}
+}
+class Link extends InlineNode {
+	constructor(text: string) {
+		super(text);
+	}
+}
+class Strong extends InlineNode {
+	constructor(text: string) {
+		super(text);
+	}
+}
+class Cite extends InlineNode {
+	constructor(text: string) {
+		super(text);
+	}
+}
+class KBD extends InlineNode {
+	constructor(text: string) {
+		super(text);
 	}
 }
 
@@ -200,6 +211,42 @@ class NodeArray extends Array {
 		this.push({ tag: 'kbd', text, ...opts });
 		return this;
 	}
+}
+
+class Page {
+	h1 = '';
+	slug: string;
+	description?: string = undefined;
+	hero_img?: string = undefined;
+	published_at?: string = undefined;
+	updated_at?: string = undefined;
+
+	nodes = new NodeArray();
+
+	constructor(params: {
+		h1: string;
+		slug: string;
+		description?: string;
+		hero_img?: string;
+		published_at?: string;
+		updated_at?: string;
+		nodes?: NodeArray;
+	}) {
+		this.h1 = params.h1;
+		this.slug = params.slug;
+		this.description = params.description;
+		this.hero_img = params.hero_img;
+		this.published_at = params.published_at;
+		this.updated_at = params.updated_at;
+
+		if (params.nodes) {
+			this.nodes = params.nodes;
+		}
+	}
+
+	fromJSON() {}
+
+	toHTML() {}
 }
 
 const page = new Page({
