@@ -4,6 +4,7 @@ class BlockNode {
 	children;
 	id;
 	class;
+	style;
 	data;
 	metadata;
 
@@ -11,12 +12,14 @@ class BlockNode {
 		children: NodeArray;
 		id?: string;
 		class?: string[];
-		data: Record<string, string>;
-		metadata: unknown;
+		style?: Record<string, string>;
+		data?: Record<string, string>;
+		metadata?: unknown;
 	}) {
 		this.children = params.children;
 		this.id = params.id;
 		this.class = params.class;
+		this.style = params.style;
 		this.data = params.data;
 		this.metadata = params.metadata;
 	}
