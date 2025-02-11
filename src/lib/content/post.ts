@@ -57,20 +57,21 @@ class Anchor extends InlineNode {
 	href;
 	target;
 	download;
+	class;
 
 	constructor(params: {
 		text: string;
 		href: string;
 		target?: '_blank';
 		download?: boolean;
-		class: string[];
+		class?: string[];
 	}) {
 		super(params.text);
 
-		this.href = href;
-		this.target = opts.target;
-		this.download = opts.download;
-		this.class = opts.class;
+		this.href = params.href;
+		this.target = params.target;
+		this.download = params.download;
+		this.class = params.class;
 	}
 
 	get tag() {
