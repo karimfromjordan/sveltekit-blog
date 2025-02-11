@@ -104,6 +104,19 @@ class Cite extends InlineNode {
 		return 'cite';
 	}
 }
+class Code extends InlineNode {
+	class;
+
+	constructor(params: { text: string; class?: string[] }) {
+		super(params.text);
+
+		this.class = params.class;
+	}
+
+	get tag() {
+		return 'code';
+	}
+}
 class KBD extends InlineNode {
 	class;
 
