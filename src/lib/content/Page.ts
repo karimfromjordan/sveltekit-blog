@@ -488,8 +488,13 @@ class Anchor extends InlineNode {
 		return { ...super.toObject(), tag: this.tag };
 	}
 }
+
+interface StrongParams {
+	text: string;
+	class?: string[];
+}
 class Strong extends InlineNode {
-	constructor(params: { text: string; class?: string[] }) {
+	constructor(params: StrongParams) {
 		super({
 			text: params.text,
 			attributes: {
@@ -504,8 +509,13 @@ class Strong extends InlineNode {
 		return { ...super.toObject(), tag: this.tag };
 	}
 }
+
+interface CiteParams {
+	text: string;
+	class?: string[];
+}
 class Cite extends InlineNode {
-	constructor(params: { text: string; class?: string[] }) {
+	constructor(params: CiteParams) {
 		super({
 			text: params.text,
 			attributes: {
@@ -520,8 +530,13 @@ class Cite extends InlineNode {
 		return { ...super.toObject(), tag: this.tag };
 	}
 }
+
+interface CodeParams {
+	text: string;
+	class?: string[];
+}
 class Code extends InlineNode {
-	constructor(params: { text: string; class?: string[] }) {
+	constructor(params: CodeParams) {
 		super({
 			text: params.text,
 			attributes: {
@@ -536,8 +551,13 @@ class Code extends InlineNode {
 		return { ...super.toObject(), tag: this.tag };
 	}
 }
+
+interface KBDParams {
+	text: string;
+	class?: string[];
+}
 class KBD extends InlineNode {
-	constructor(params: { text: string; class?: string[] }) {
+	constructor(params: KBDParams) {
 		super({
 			text: params.text,
 			attributes: {
@@ -627,11 +647,11 @@ class NodeArray extends Array {
 		this.push({ tag: 'blockquote', ...params });
 		return this;
 	}
-	details(params) {
+	details(params: DetailsParams) {
 		this.push(new Details(params));
 		return this;
 	}
-	summary(params) {
+	summary(params: SummaryParams) {
 		this.push(new Summary(params));
 		return this;
 	}
@@ -650,7 +670,7 @@ class NodeArray extends Array {
 	td(params) {
 		return this;
 	}
-	div(params) {
+	div(params: DivParams) {
 		this.push(new Div(params));
 		return this;
 	}
@@ -752,7 +772,7 @@ const page = new Page({
 	node: new Article({
 		children: new NodeArray()
 			.p({
-				class: ['text-white'],
+				class: ['text-white', 'bg-black'],
 				children: new NodeArray()
 					.text(
 						`This repository contains a GitHub workflow with a build job that builds
