@@ -534,7 +534,19 @@ class NodeArray extends Array {
 		this.push(new Summary(params));
 		return this;
 	}
-	table(params: { children: Array<NodeArray[]> }) {
+	table(params) {
+		return this;
+	}
+	thead(params) {
+		return this;
+	}
+	tbody(params) {
+		return this;
+	}
+	tr(params) {
+		return this;
+	}
+	td(params) {
 		return this;
 	}
 	div(params) {
