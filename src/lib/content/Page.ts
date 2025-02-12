@@ -381,12 +381,23 @@ class Paragraph extends BlockNode {
 		return { ...super.toObject(), tag: this.tag };
 	}
 }
+
+interface OrderedListParams {
+	children: NodeArray;
+	reversed?: boolean;
+	start?: number;
+	type?: 'a' | 'A' | 'i' | 'I' | '1';
+	class?: string[];
+}
 class OrderedList extends BlockNode {
-	constructor(params: { children: NodeArray; class?: string[] }) {
+	constructor(params: OrderedListParams) {
 		super({
 			children: params.children,
 			attributes: {
-				class: params.class
+				class: params.class,
+				reversed: params.reversed,
+				start: params.start,
+				type: params.type
 			}
 		});
 	}
@@ -397,8 +408,13 @@ class OrderedList extends BlockNode {
 		return { ...super.toObject(), tag: this.tag };
 	}
 }
+
+interface UnorderedListParams {
+	children: NodeArray;
+	class?: string[];
+}
 class UnorderedList extends BlockNode {
-	constructor(params: { children: NodeArray; class?: string[] }) {
+	constructor(params: UnorderedListParams) {
 		super({
 			children: params.children,
 			attributes: {
@@ -413,12 +429,19 @@ class UnorderedList extends BlockNode {
 		return { ...super.toObject(), tag: this.tag };
 	}
 }
+
+interface ListItemParams {
+	children: NodeArray;
+	class?: string[];
+	value?: number;
+}
 class ListItem extends BlockNode {
-	constructor(params: { children: NodeArray; class?: string[] }) {
+	constructor(params: ListItemParams) {
 		super({
 			children: params.children,
 			attributes: {
-				class: params.class
+				class: params.class,
+				value: params.value
 			}
 		});
 	}
@@ -438,21 +461,23 @@ class Text extends InlineNode {
 		return super.toObject();
 	}
 }
+
+interface AnchorParams {
+	text: string;
+	href: string;
+	target?: '_blank';
+	download?: boolean;
+	class?: string[];
+}
 class Anchor extends InlineNode {
-	constructor(params: {
-		text: string;
-		href: string;
-		target?: '_blank';
-		download?: boolean;
-		class?: string[];
-	}) {
+	constructor(params: AnchorParams) {
 		super({
 			text: params.text,
 			attributes: {
-				class: params.class,
 				href: params.href,
 				target: params.target,
-				download: params.download
+				download: params.download,
+				class: params.class
 			}
 		});
 	}
@@ -581,15 +606,15 @@ class NodeArray extends Array {
 		this.push(new Paragraph(params));
 		return this;
 	}
-	ol(params) {
+	ol(params: OrderedListParams) {
 		this.push(new OrderedList(params));
 		return this;
 	}
-	ul(params) {
+	ul(params: UnorderedListParams) {
 		this.push(new UnorderedList(params));
 		return this;
 	}
-	li(params) {
+	li(params: ListItemParams) {
 		this.push(new ListItem(params));
 		return this;
 	}
