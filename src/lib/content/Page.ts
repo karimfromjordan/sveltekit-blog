@@ -281,6 +281,39 @@ class Paragraph extends BlockNode {
 		return { ...super.toObject(), tag: this.tag };
 	}
 }
+class OrderedList extends BlockNode {
+	constructor(params) {
+		super(params);
+	}
+	get tag() {
+		return 'ol';
+	}
+	toJSON() {
+		return { ...super.toObject(), tag: this.tag };
+	}
+}
+class UnorderedList extends BlockNode {
+	constructor(params) {
+		super(params);
+	}
+	get tag() {
+		return 'ul';
+	}
+	toJSON() {
+		return { ...super.toObject(), tag: this.tag };
+	}
+}
+class ListItem extends BlockNode {
+	constructor(params) {
+		super(params);
+	}
+	get tag() {
+		return 'li';
+	}
+	toJSON() {
+		return { ...super.toObject(), tag: this.tag };
+	}
+}
 
 class Text extends InlineNode {
 	constructor(text: string) {
@@ -420,16 +453,16 @@ class NodeArray extends Array {
 		this.push(new Paragraph(params));
 		return this;
 	}
-	ol(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
-		this.push({ tag: 'ol', ...params });
+	ol(params) {
+		this.push(new OrderedList(params));
 		return this;
 	}
-	ul(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
-		this.push({ tag: 'ul', ...params });
+	ul(params) {
+		this.push(new UnorderedList(params));
 		return this;
 	}
-	li(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
-		this.push({ tag: 'li', ...params });
+	li(params) {
+		this.push(new ListItem(params));
 		return this;
 	}
 	blockquote(params: {
@@ -591,14 +624,6 @@ const page = new Page({
 						})
 					})
 			})
-			.image({
-				src: '',
-				alt: ''
-			})
-			.precode({
-				lang: 'js',
-				code: 'console.log("Hello")'
-			})
 			.h2({
 				children: new NodeArray().text('The best JavaScript frameworks')
 			})
@@ -615,13 +640,11 @@ const page = new Page({
 					})
 			})
 			.note({
-				children: new NodeArray()
-					.p({
-						children: new NodeArray()
-							.text('systemd portable services')
-							.a('Google', 'https://google.com')
-					})
-					.precode({ lang: 'js', code: '' })
+				children: new NodeArray().p({
+					children: new NodeArray()
+						.text('systemd portable services')
+						.a('Google', 'https://google.com')
+				})
 			})
 	})
 });
