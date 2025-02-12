@@ -453,6 +453,29 @@ class ListItem extends BlockNode {
 	}
 }
 
+interface BlockquoteParams {
+	children: NodeArray;
+	cite?: string;
+	class?: string[];
+}
+class Blockquote extends BlockNode {
+	constructor(params: BlockquoteParams) {
+		super({
+			children: params.children,
+			attributes: {
+				cite: params.cite,
+				class: params.class
+			}
+		});
+	}
+	get tag() {
+		return 'blockquote';
+	}
+	toJSON() {
+		return { ...super.toObject(), tag: this.tag };
+	}
+}
+
 class Text extends InlineNode {
 	constructor(text: string) {
 		super({ text });
@@ -638,13 +661,8 @@ class NodeArray extends Array {
 		this.push(new ListItem(params));
 		return this;
 	}
-	blockquote(params: {
-		children: NodeArray;
-		cite?: string;
-		class?: string;
-		data?: Record<string, string>;
-	}) {
-		this.push({ tag: 'blockquote', ...params });
+	blockquote(params: BlockquoteParams) {
+		this.push(new Blockquote(params));
 		return this;
 	}
 	details(params: DetailsParams) {
