@@ -53,8 +53,13 @@ class InlineNode {
 	}
 }
 
+interface HeaderParams {
+	children: NodeArray;
+	class?: string[];
+	aria_label?: string;
+}
 class Header extends BlockNode {
-	constructor(params: { children: NodeArray; class?: string[]; aria_label?: string }) {
+	constructor(params: HeaderParams) {
 		super({
 			children: params.children,
 			attributes: {
@@ -70,8 +75,14 @@ class Header extends BlockNode {
 		return { ...super.toObject(), tag: this.tag };
 	}
 }
+
+interface FooterParams {
+	children: NodeArray;
+	class?: string[];
+	aria_label?: string;
+}
 class Footer extends BlockNode {
-	constructor(params: { children: NodeArray; class?: string[]; aria_label?: string }) {
+	constructor(params: FooterParams) {
 		super({
 			children: params.children,
 			attributes: {
@@ -87,8 +98,14 @@ class Footer extends BlockNode {
 		return { ...super.toObject(), tag: this.tag };
 	}
 }
+
+interface MainParams {
+	children: NodeArray;
+	class?: string[];
+	aria_label?: string;
+}
 class Main extends BlockNode {
-	constructor(params: { children: NodeArray; class?: string[]; aria_label?: string }) {
+	constructor(params: MainParams) {
 		super({
 			children: params.children,
 			attributes: {
@@ -104,8 +121,14 @@ class Main extends BlockNode {
 		return { ...super.toObject(), tag: this.tag };
 	}
 }
+
+interface ArticleParams {
+	children: NodeArray;
+	class?: string[];
+	aria_label?: string;
+}
 class Article extends BlockNode {
-	constructor(params: { children: NodeArray; class?: string[]; aria_label?: string }) {
+	constructor(params: ArticleParams) {
 		super({
 			children: params.children,
 			attributes: {
@@ -121,8 +144,14 @@ class Article extends BlockNode {
 		return { ...super.toObject(), tag: this.tag };
 	}
 }
+
+interface AsideParams {
+	children: NodeArray;
+	class?: string[];
+	aria_label?: string;
+}
 class Aside extends BlockNode {
-	constructor(params: { children: NodeArray; class?: string[]; aria_label?: string }) {
+	constructor(params: AsideParams) {
 		super({
 			children: params.children,
 			attributes: {
@@ -138,8 +167,14 @@ class Aside extends BlockNode {
 		return { ...super.toObject(), tag: this.tag };
 	}
 }
+
+interface SectionParams {
+	children: NodeArray;
+	class?: string[];
+	aria_label?: string;
+}
 class Section extends BlockNode {
-	constructor(params: { children: NodeArray; class?: string[]; aria_label?: string }) {
+	constructor(params: SectionParams) {
 		super({
 			children: params.children,
 			attributes: {
@@ -155,8 +190,14 @@ class Section extends BlockNode {
 		return { ...super.toObject(), tag: this.tag };
 	}
 }
+
+interface SearchParams {
+	children: NodeArray;
+	class?: string[];
+	aria_label?: string;
+}
 class Search extends BlockNode {
-	constructor(params: { children: NodeArray; class?: string[]; aria_label?: string }) {
+	constructor(params: SearchParams) {
 		super({
 			children: params.children,
 			attributes: {
@@ -172,8 +213,13 @@ class Search extends BlockNode {
 		return { ...super.toObject(), tag: this.tag };
 	}
 }
+
+interface DetailsParams {
+	children: NodeArray;
+	class?: string[];
+}
 class Details extends BlockNode {
-	constructor(params: { children: NodeArray; class?: string[] }) {
+	constructor(params: DetailsParams) {
 		super({
 			children: params.children,
 			attributes: {
@@ -188,8 +234,13 @@ class Details extends BlockNode {
 		return { ...super.toObject(), tag: this.tag };
 	}
 }
+
+interface SummaryParams {
+	children: NodeArray;
+	class?: string[];
+}
 class Summary extends BlockNode {
-	constructor(params: { children: NodeArray; class?: string[] }) {
+	constructor(params: SummaryParams) {
 		super({
 			children: params.children,
 			attributes: {
@@ -204,8 +255,13 @@ class Summary extends BlockNode {
 		return { ...super.toObject(), tag: this.tag };
 	}
 }
+
+interface DivParams {
+	children: NodeArray;
+	class?: string[];
+}
 class Div extends BlockNode {
-	constructor(params: { children: NodeArray; class?: string[] }) {
+	constructor(params: DivParams) {
 		super({
 			children: params.children,
 			attributes: {
@@ -220,8 +276,13 @@ class Div extends BlockNode {
 		return { ...super.toObject(), tag: this.tag };
 	}
 }
+
+interface H1Params {
+	children: NodeArray;
+	class?: string[];
+}
 class H1 extends BlockNode {
-	constructor(params: { children: NodeArray; class?: string[] }) {
+	constructor(params: H1Params) {
 		const id = params.children
 			?.map((node) => node.text)
 			.join('')
@@ -242,9 +303,14 @@ class H1 extends BlockNode {
 	toJSON() {
 		return { ...super.toObject(), tag: this.tag };
 	}
+}
+
+interface H2Params {
+	children: NodeArray;
+	class?: string[];
 }
 class H2 extends BlockNode {
-	constructor(params: { children: NodeArray; class?: string[] }) {
+	constructor(params: H2Params) {
 		const id = params.children
 			?.map((node) => node.text)
 			.join('')
@@ -265,9 +331,14 @@ class H2 extends BlockNode {
 	toJSON() {
 		return { ...super.toObject(), tag: this.tag };
 	}
+}
+
+interface H3Params {
+	children: NodeArray;
+	class?: string[];
 }
 class H3 extends BlockNode {
-	constructor(params: { children: NodeArray; class?: string[] }) {
+	constructor(params: H3Params) {
 		const id = params.children
 			?.map((node) => node.text)
 			.join('')
@@ -289,8 +360,13 @@ class H3 extends BlockNode {
 		return { ...super.toObject(), tag: this.tag };
 	}
 }
+
+interface ParagraphParams {
+	children: NodeArray;
+	class?: string[];
+}
 class Paragraph extends BlockNode {
-	constructor(params: { children: NodeArray; class?: string[] }) {
+	constructor(params: ParagraphParams) {
 		super({
 			children: params.children,
 			attributes: {
@@ -460,48 +536,48 @@ class NodeArray extends Array {
 		this.metadata = params?.metadata;
 	}
 
-	header(params) {
+	header(params: HeaderParams) {
 		this.push(new Header(params));
 		return this;
 	}
-	footer(params) {
+	footer(params: FooterParams) {
 		this.push(new Footer(params));
 		return this;
 	}
-	main(params) {
+	main(params: MainParams) {
 		this.push(new Main(params));
 		return this;
 	}
-	article(params) {
+	article(params: ArticleParams) {
 		this.push(new Article(params));
 		return this;
 	}
-	aside(params) {
+	aside(params: AsideParams) {
 		this.push(new Aside(params));
 		return this;
 	}
-	section(params) {
+	section(params: SectionParams) {
 		this.push(new Section(params));
 		return this;
 	}
-	search(params) {
+	search(params: SearchParams) {
 		this.push(new Search(params));
 		return this;
 	}
 	// typography
-	h1(params) {
+	h1(params: H1Params) {
 		this.push(new H1(params));
 		return this;
 	}
-	h2(params) {
+	h2(params: H2Params) {
 		this.push(new H2(params));
 		return this;
 	}
-	h3(params) {
+	h3(params: H3Params) {
 		this.push(new H3(params));
 		return this;
 	}
-	p(params) {
+	p(params: ParagraphParams) {
 		this.push(new Paragraph(params));
 		return this;
 	}
