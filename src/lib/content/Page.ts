@@ -617,6 +617,27 @@ class Strong extends InlineNode {
 	}
 }
 
+interface SpanSParams {
+	text: string;
+	class?: string[];
+}
+class Span extends InlineNode {
+	constructor(params: SpanSParams) {
+		super({
+			text: params.text,
+			attributes: {
+				class: params.class
+			}
+		});
+	}
+	get tag() {
+		return 'span';
+	}
+	toJSON() {
+		return { ...super.toObject(), tag: this.tag };
+	}
+}
+
 interface CiteParams {
 	text: string;
 	class?: string[];
@@ -835,6 +856,10 @@ class NodeArray extends Array {
 		opts?: { target?: '_blank'; download: boolean; class?: string[] }
 	) {
 		this.push(new Anchor({ text, href, ...opts }));
+		return this;
+	}
+	span(text: string, opts?: { class?: string[] }) {
+		this.push(new Span({ text, ...opts }));
 		return this;
 	}
 	strong(text: string, opts?: { class?: string[] }) {
