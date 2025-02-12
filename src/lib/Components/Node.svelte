@@ -5,7 +5,7 @@
 </script>
 
 {#if node.tag}
-	<svelte:element this={node.tag} {...node.attr}>
+	<svelte:element this={node.tag} {...node.attributes}>
 		{#if node.text}
 			{node.text}
 		{/if}

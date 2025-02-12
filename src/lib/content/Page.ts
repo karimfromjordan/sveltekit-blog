@@ -4,7 +4,7 @@ class BlockNode {
 	children;
 	metadata;
 	// HTML attributes
-	attr = {
+	attributes: Record<string, unknown> = {
 		id: undefined,
 		class: undefined,
 		style: undefined,
@@ -14,17 +14,11 @@ class BlockNode {
 	constructor(params: {
 		children: NodeArray;
 		metadata?: unknown;
-		id?: string;
-		class?: string[];
-		style?: Record<string, string>;
-		data?: Record<string, string>;
+		attributes: Record<string, unknown>;
 	}) {
 		this.children = params.children;
 		this.metadata = params.metadata;
-		this.attr.id = params.id;
-		this.attr.class = params.class;
-		this.attr.style = params.style;
-		this.attr.data = params.data;
+		this.attributes = params.attributes;
 	}
 	get kind() {
 		return 'block';
@@ -33,7 +27,7 @@ class BlockNode {
 		return {
 			kind: this.kind,
 			children: this.children,
-			attr: this.attr
+			attributes: this.attributes
 		};
 	}
 }
@@ -41,13 +35,13 @@ class BlockNode {
 class InlineNode {
 	text;
 
-	attr: {
-		class: undefined;
+	attributes: Record<string, unknown> = {
+		class: undefined
 	};
 
-	constructor(params: { text: string; class?: string[] }) {
+	constructor(params: { text: string; attributes?: Record<string, unknown> }) {
 		this.text = params.text;
-		this.attr.class = params.class;
+		this.attributes = params.attributes;
 	}
 	get kind() {
 		return 'inline';
@@ -61,134 +55,132 @@ class InlineNode {
 }
 
 class Header extends BlockNode {
-	aria_label;
-
-	constructor(params: { aria_label?: string }) {
-		super(params);
-		this.aria_label = params.aria_label;
+	constructor(params: { children: NodeArray; class?: string[]; aria_label?: string }) {
+		super({
+			children: params.children,
+			attributes: {
+				class: params.class,
+				aria_label: params.aria_label
+			}
+		});
 	}
 	get tag() {
 		return 'header';
 	}
 	toJSON() {
-		return {
-			...super.toObject(),
-			tag: this.tag,
-			aria_label: this.aria_label
-		};
+		return { ...super.toObject(), tag: this.tag };
 	}
 }
 class Footer extends BlockNode {
-	aria_label;
-
-	constructor(params: { aria_label?: string }) {
-		super(params);
-		this.aria_label = params.aria_label;
+	constructor(params: { children: NodeArray; class?: string[]; aria_label?: string }) {
+		super({
+			children: params.children,
+			attributes: {
+				class: params.class,
+				aria_label: params.aria_label
+			}
+		});
 	}
 	get tag() {
 		return 'footer';
 	}
 	toJSON() {
-		return {
-			...super.toObject(),
-			tag: this.tag,
-			aria_label: this.aria_label
-		};
+		return { ...super.toObject(), tag: this.tag };
 	}
 }
 class Main extends BlockNode {
-	aria_label;
-
-	constructor(params: { aria_label?: string }) {
-		super(params);
-		this.aria_label = params.aria_label;
+	constructor(params: { children: NodeArray; class?: string[]; aria_label?: string }) {
+		super({
+			children: params.children,
+			attributes: {
+				class: params.class,
+				aria_label: params.aria_label
+			}
+		});
 	}
 	get tag() {
 		return 'main';
 	}
 	toJSON() {
-		return {
-			...super.toObject(),
-			tag: this.tag,
-			aria_label: this.aria_label
-		};
+		return { ...super.toObject(), tag: this.tag };
 	}
 }
 class Article extends BlockNode {
-	aria_label;
-
-	constructor(params: { aria_label?: string }) {
-		super(params);
-		this.aria_label = params.aria_label;
+	constructor(params: { children: NodeArray; class?: string[]; aria_label?: string }) {
+		super({
+			children: params.children,
+			attributes: {
+				class: params.class,
+				aria_label: params.aria_label
+			}
+		});
 	}
 	get tag() {
 		return 'article';
 	}
 	toJSON() {
-		return {
-			...super.toObject(),
-			tag: this.tag,
-			aria_label: this.aria_label
-		};
+		return { ...super.toObject(), tag: this.tag };
 	}
 }
 class Aside extends BlockNode {
-	aria_label;
-
-	constructor(params: { aria_label?: string }) {
-		super(params);
-		this.aria_label = params.aria_label;
+	constructor(params: { children: NodeArray; class?: string[]; aria_label?: string }) {
+		super({
+			children: params.children,
+			attributes: {
+				class: params.class,
+				aria_label: params.aria_label
+			}
+		});
 	}
 	get tag() {
 		return 'aside';
 	}
 	toJSON() {
-		return {
-			...super.toObject(),
-			tag: this.tag,
-			aria_label: this.aria_label
-		};
+		return { ...super.toObject(), tag: this.tag };
 	}
 }
 class Section extends BlockNode {
-	aria_label;
-
-	constructor(params: { aria_label?: string }) {
-		super(params);
-		this.aria_label = params.aria_label;
+	constructor(params: { children: NodeArray; class?: string[]; aria_label?: string }) {
+		super({
+			children: params.children,
+			attributes: {
+				class: params.class,
+				aria_label: params.aria_label
+			}
+		});
 	}
 	get tag() {
 		return 'section';
 	}
 	toJSON() {
-		return {
-			...super.toObject(),
-			tag: this.tag,
-			aria_label: this.aria_label
-		};
+		return { ...super.toObject(), tag: this.tag };
 	}
 }
 class Search extends BlockNode {
-	aria_label;
-
-	constructor(params: { aria_label?: string }) {
-		super(params);
-		this.aria_label = params.aria_label;
+	constructor(params: { children: NodeArray; class?: string[]; aria_label?: string }) {
+		super({
+			children: params.children,
+			attributes: {
+				class: params.class,
+				aria_label: params.aria_label
+			}
+		});
 	}
 	get tag() {
 		return 'search';
 	}
 	toJSON() {
-		return {
-			...super.toObject(),
-			tag: this.tag,
-			aria_label: this.aria_label
-		};
+		return { ...super.toObject(), tag: this.tag };
 	}
 }
 class Details extends BlockNode {
-	constructor(params) {
-		super(params);
+	constructor(params: { children: NodeArray; class?: string[] }) {
+		super({
+			children: params.children,
+			attributes: {
+				class: params.class
+			}
+		});
 	}
 	get tag() {
 		return 'details';
@@ -198,19 +190,29 @@ class Details extends BlockNode {
 	}
 }
 class Summary extends BlockNode {
-	constructor(params) {
-		super(params);
+	constructor(params: { children: NodeArray; class?: string[] }) {
+		super({
+			children: params.children,
+			attributes: {
+				class: params.class
+			}
+		});
 	}
 	get tag() {
-		return 'div';
+		return 'summary';
 	}
 	toJSON() {
 		return { ...super.toObject(), tag: this.tag };
 	}
 }
 class Div extends BlockNode {
-	constructor(params) {
-		super(params);
+	constructor(params: { children: NodeArray; class?: string[] }) {
+		super({
+			children: params.children,
+			attributes: {
+				class: params.class
+			}
+		});
 	}
 	get tag() {
 		return 'div';
@@ -220,14 +222,20 @@ class Div extends BlockNode {
 	}
 }
 class H1 extends BlockNode {
-	constructor(params) {
+	constructor(params: { children: NodeArray; class?: string[] }) {
 		const id = params.children
 			?.map((node) => node.text)
 			.join('')
 			.toLowerCase()
 			.replaceAll(' ', '-');
 
-		super({ id, ...params });
+		super({
+			children: params.children,
+			attributes: {
+				id,
+				class: params.class
+			}
+		});
 	}
 	get tag() {
 		return 'h1';
@@ -237,14 +245,20 @@ class H1 extends BlockNode {
 	}
 }
 class H2 extends BlockNode {
-	constructor(params) {
+	constructor(params: { children: NodeArray; class?: string[] }) {
 		const id = params.children
 			?.map((node) => node.text)
 			.join('')
 			.toLowerCase()
 			.replaceAll(' ', '-');
 
-		super({ id, ...params });
+		super({
+			children: params.children,
+			attributes: {
+				id,
+				class: params.class
+			}
+		});
 	}
 	get tag() {
 		return 'h1';
@@ -254,14 +268,20 @@ class H2 extends BlockNode {
 	}
 }
 class H3 extends BlockNode {
-	constructor(params) {
+	constructor(params: { children: NodeArray; class?: string[] }) {
 		const id = params.children
 			?.map((node) => node.text)
 			.join('')
 			.toLowerCase()
 			.replaceAll(' ', '-');
 
-		super({ id, ...params });
+		super({
+			children: params.children,
+			attributes: {
+				id,
+				class: params.class
+			}
+		});
 	}
 	get tag() {
 		return 'h1';
@@ -271,8 +291,13 @@ class H3 extends BlockNode {
 	}
 }
 class Paragraph extends BlockNode {
-	constructor(params) {
-		super(params);
+	constructor(params: { children: NodeArray; class?: string[] }) {
+		super({
+			children: params.children,
+			attributes: {
+				class: params.class
+			}
+		});
 	}
 	get tag() {
 		return 'p';
@@ -282,8 +307,13 @@ class Paragraph extends BlockNode {
 	}
 }
 class OrderedList extends BlockNode {
-	constructor(params) {
-		super(params);
+	constructor(params: { children: NodeArray; class?: string[] }) {
+		super({
+			children: params.children,
+			attributes: {
+				class: params.class
+			}
+		});
 	}
 	get tag() {
 		return 'ol';
@@ -293,8 +323,13 @@ class OrderedList extends BlockNode {
 	}
 }
 class UnorderedList extends BlockNode {
-	constructor(params) {
-		super(params);
+	constructor(params: { children: NodeArray; class?: string[] }) {
+		super({
+			children: params.children,
+			attributes: {
+				class: params.class
+			}
+		});
 	}
 	get tag() {
 		return 'ul';
@@ -304,8 +339,13 @@ class UnorderedList extends BlockNode {
 	}
 }
 class ListItem extends BlockNode {
-	constructor(params) {
-		super(params);
+	constructor(params: { children: NodeArray; class?: string[] }) {
+		super({
+			children: params.children,
+			attributes: {
+				class: params.class
+			}
+		});
 	}
 	get tag() {
 		return 'li';
@@ -324,10 +364,6 @@ class Text extends InlineNode {
 	}
 }
 class Anchor extends InlineNode {
-	href;
-	target;
-	download;
-
 	constructor(params: {
 		text: string;
 		href: string;
@@ -335,29 +371,31 @@ class Anchor extends InlineNode {
 		download?: boolean;
 		class?: string[];
 	}) {
-		super({ text: params.text, class: params.class });
-
-		this.href = params.href;
-		this.target = params.target;
-		this.download = params.download;
+		super({
+			text: params.text,
+			attributes: {
+				class: params.class,
+				href: params.href,
+				target: params.target,
+				download: params.download
+			}
+		});
 	}
 	get tag() {
 		return 'a';
 	}
 	toJSON() {
-		return {
-			...super.toObject(),
-			tag: this.tag,
-			text: this.text,
-			href: this.href,
-			target: this.target,
-			download: this.download
-		};
+		return { ...super.toObject(), tag: this.tag };
 	}
 }
 class Strong extends InlineNode {
 	constructor(params: { text: string; class?: string[] }) {
-		super(params);
+		super({
+			text: params.text,
+			attributes: {
+				class: params.class
+			}
+		});
 	}
 	get tag() {
 		return 'strong';
@@ -368,7 +406,12 @@ class Strong extends InlineNode {
 }
 class Cite extends InlineNode {
 	constructor(params: { text: string; class?: string[] }) {
-		super(params);
+		super({
+			text: params.text,
+			attributes: {
+				class: params.class
+			}
+		});
 	}
 	get tag() {
 		return 'cite';
@@ -379,7 +422,12 @@ class Cite extends InlineNode {
 }
 class Code extends InlineNode {
 	constructor(params: { text: string; class?: string[] }) {
-		super(params);
+		super({
+			text: params.text,
+			attributes: {
+				class: params.class
+			}
+		});
 	}
 	get tag() {
 		return 'code';
@@ -390,7 +438,12 @@ class Code extends InlineNode {
 }
 class KBD extends InlineNode {
 	constructor(params: { text: string; class?: string[] }) {
-		super(params);
+		super({
+			text: params.text,
+			attributes: {
+				class: params.class
+			}
+		});
 	}
 	get tag() {
 		return 'kbd';
@@ -589,7 +642,7 @@ const page = new Page({
 	node: new Article({
 		children: new NodeArray()
 			.p({
-				class: 'text-white',
+				class: ['text-white'],
 				children: new NodeArray()
 					.text(
 						`This repository contains a GitHub workflow with a build job that builds
