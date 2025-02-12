@@ -4,7 +4,7 @@ class BlockNode {
 	children;
 	metadata;
 	// HTML attributes
-	attributes: Record<string, unknown> = {
+	attributes?: Record<string, unknown> = {
 		id: undefined,
 		class: undefined,
 		style: undefined,
@@ -14,7 +14,7 @@ class BlockNode {
 	constructor(params: {
 		children: NodeArray;
 		metadata?: unknown;
-		attributes: Record<string, unknown>;
+		attributes?: Record<string, unknown>;
 	}) {
 		this.children = params.children;
 		this.metadata = params.metadata;
@@ -35,9 +35,7 @@ class BlockNode {
 class InlineNode {
 	text;
 
-	attributes: Record<string, unknown> = {
-		class: undefined
-	};
+	attributes?: Record<string, unknown>;
 
 	constructor(params: { text: string; attributes?: Record<string, unknown> }) {
 		this.text = params.text;
@@ -49,7 +47,8 @@ class InlineNode {
 	toObject() {
 		return {
 			kind: this.kind,
-			text: this.text
+			text: this.text,
+			attributes: this.attributes
 		};
 	}
 }

@@ -11,7 +11,7 @@
 		{/if}
 		{#if node.children}
 			{#each node.children as n (n)}
-				<Node {...n}></Node>
+				<Node node={n} {variables} {components}></Node>
 			{/each}
 		{/if}
 	</svelte:element>

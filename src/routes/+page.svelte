@@ -4,6 +4,6 @@
 	const props = $props();
 </script>
 
-<Node {...props.data.page.node}></Node>
+<Node {...props.data.page}></Node>
 
 <pre>{JSON.stringify(props, null, 2)}</pre>
