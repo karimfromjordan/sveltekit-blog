@@ -23,9 +23,19 @@ class BlockNode {
 		this.data = params.data;
 		this.metadata = params.metadata;
 	}
-
-	get type() {
+	get kind() {
 		return 'block';
+	}
+	toObject() {
+		return {
+			kind: this.kind,
+			children: this.children,
+			id: this.id,
+			class: this.class,
+			style: this.style,
+			data: this.data,
+			metadata: this.metadata
+		};
 	}
 }
 
@@ -35,9 +45,14 @@ class InlineNode {
 	constructor(text: string) {
 		this.text = text;
 	}
-
-	get type() {
+	get kind() {
 		return 'inline';
+	}
+	toObject() {
+		return {
+			kind: this.kind,
+			text: this.text
+		};
 	}
 }
 
@@ -48,9 +63,15 @@ class Header extends BlockNode {
 		super(params);
 		this.aria_label = params.aria_label;
 	}
-
 	get tag() {
 		return 'header';
+	}
+	toJSON() {
+		return {
+			...super.toObject(),
+			tag: this.tag,
+			aria_label: this.aria_label
+		};
 	}
 }
 class Footer extends BlockNode {
@@ -60,9 +81,15 @@ class Footer extends BlockNode {
 		super(params);
 		this.aria_label = params.aria_label;
 	}
-
 	get tag() {
 		return 'footer';
+	}
+	toJSON() {
+		return {
+			...super.toObject(),
+			tag: this.tag,
+			aria_label: this.aria_label
+		};
 	}
 }
 class Main extends BlockNode {
@@ -72,9 +99,15 @@ class Main extends BlockNode {
 		super(params);
 		this.aria_label = params.aria_label;
 	}
-
 	get tag() {
 		return 'main';
+	}
+	toJSON() {
+		return {
+			...super.toObject(),
+			tag: this.tag,
+			aria_label: this.aria_label
+		};
 	}
 }
 class Article extends BlockNode {
@@ -84,9 +117,15 @@ class Article extends BlockNode {
 		super(params);
 		this.aria_label = params.aria_label;
 	}
-
 	get tag() {
 		return 'article';
+	}
+	toJSON() {
+		return {
+			...super.toObject(),
+			tag: this.tag,
+			aria_label: this.aria_label
+		};
 	}
 }
 class Aside extends BlockNode {
@@ -96,9 +135,15 @@ class Aside extends BlockNode {
 		super(params);
 		this.aria_label = params.aria_label;
 	}
-
 	get tag() {
 		return 'aside';
+	}
+	toJSON() {
+		return {
+			...super.toObject(),
+			tag: this.tag,
+			aria_label: this.aria_label
+		};
 	}
 }
 class Section extends BlockNode {
@@ -108,9 +153,15 @@ class Section extends BlockNode {
 		super(params);
 		this.aria_label = params.aria_label;
 	}
-
 	get tag() {
 		return 'section';
+	}
+	toJSON() {
+		return {
+			...super.toObject(),
+			tag: this.tag,
+			aria_label: this.aria_label
+		};
 	}
 }
 class Search extends BlockNode {
@@ -120,42 +171,119 @@ class Search extends BlockNode {
 		super(params);
 		this.aria_label = params.aria_label;
 	}
-
 	get tag() {
 		return 'search';
+	}
+	toJSON() {
+		return {
+			...super.toObject(),
+			tag: this.tag,
+			aria_label: this.aria_label
+		};
 	}
 }
 class Details extends BlockNode {
 	constructor(params) {
 		super(params);
 	}
-
 	get tag() {
-		return 'div';
+		return 'details';
+	}
+	toJSON() {
+		return { ...super.toObject(), tag: this.tag };
 	}
 }
 class Summary extends BlockNode {
 	constructor(params) {
 		super(params);
 	}
-
 	get tag() {
 		return 'div';
+	}
+	toJSON() {
+		return { ...super.toObject(), tag: this.tag };
 	}
 }
 class Div extends BlockNode {
 	constructor(params) {
 		super(params);
 	}
-
 	get tag() {
 		return 'div';
+	}
+	toJSON() {
+		return { ...super.toObject(), tag: this.tag };
+	}
+}
+class H1 extends BlockNode {
+	constructor(params) {
+		const id = params.children
+			?.map((node) => node.text)
+			.join('')
+			.toLowerCase()
+			.replaceAll(' ', '-');
+
+		super({ id, ...params });
+	}
+	get tag() {
+		return 'h1';
+	}
+	toJSON() {
+		return { ...super.toObject(), tag: this.tag };
+	}
+}
+class H2 extends BlockNode {
+	constructor(params) {
+		const id = params.children
+			?.map((node) => node.text)
+			.join('')
+			.toLowerCase()
+			.replaceAll(' ', '-');
+
+		super({ id, ...params });
+	}
+	get tag() {
+		return 'h1';
+	}
+	toJSON() {
+		return { ...super.toObject(), tag: this.tag };
+	}
+}
+class H3 extends BlockNode {
+	constructor(params) {
+		const id = params.children
+			?.map((node) => node.text)
+			.join('')
+			.toLowerCase()
+			.replaceAll(' ', '-');
+
+		super({ id, ...params });
+	}
+	get tag() {
+		return 'h1';
+	}
+	toJSON() {
+		return { ...super.toObject(), tag: this.tag };
+	}
+}
+class Paragraph extends BlockNode {
+	constructor(params) {
+		super(params);
+	}
+	get tag() {
+		return 'p';
+	}
+	toJSON() {
+		return { ...super.toObject(), tag: this.tag };
 	}
 }
 
 class Text extends InlineNode {
 	constructor(text: string) {
 		super(text);
+	}
+	toJSON() {
+		return super.toObject();
 	}
 }
 class Anchor extends InlineNode {
@@ -178,9 +306,19 @@ class Anchor extends InlineNode {
 		this.download = params.download;
 		this.class = params.class;
 	}
-
 	get tag() {
 		return 'a';
+	}
+	toJSON() {
+		return {
+			...super.toObject(),
+			tag: this.tag,
+			text: this.text,
+			href: this.href,
+			target: this.target,
+			download: this.download,
+			class: this.class
+		};
 	}
 }
 class Strong extends InlineNode {
@@ -193,6 +331,13 @@ class Strong extends InlineNode {
 	get tag() {
 		return 'strong';
 	}
+	toJSON() {
+		return {
+			...super.toObject(),
+			tag: this.tag,
+			class: this.class
+		};
+	}
 }
 class Cite extends InlineNode {
 	class;
@@ -203,6 +348,13 @@ class Cite extends InlineNode {
 	}
 	get tag() {
 		return 'cite';
+	}
+	toJSON() {
+		return {
+			...super.toObject(),
+			tag: this.tag,
+			class: this.class
+		};
 	}
 }
 class Code extends InlineNode {
@@ -215,6 +367,13 @@ class Code extends InlineNode {
 	get tag() {
 		return 'code';
 	}
+	toJSON() {
+		return {
+			...super.toObject(),
+			tag: this.tag,
+			class: this.class
+		};
+	}
 }
 class KBD extends InlineNode {
 	class;
@@ -225,6 +384,13 @@ class KBD extends InlineNode {
 	}
 	get tag() {
 		return 'kbd';
+	}
+	toJSON() {
+		return {
+			...super.toObject(),
+			tag: this.tag,
+			class: this.class
+		};
 	}
 }
 
@@ -265,16 +431,20 @@ class NodeArray extends Array {
 		return this;
 	}
 	// typography
-	h2(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
-		this.push({ tag: 'h2', ...params });
+	h1(params) {
+		this.push(new H1(params));
 		return this;
 	}
-	h3(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
-		this.push({ tag: 'h3', ...params });
+	h2(params) {
+		this.push(new H2(params));
 		return this;
 	}
-	p(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
-		this.push({ tag: 'p', ...params });
+	h3(params) {
+		this.push(new H3(params));
+		return this;
+	}
+	p(params) {
+		this.push(new Paragraph());
 		return this;
 	}
 	ol(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
@@ -321,32 +491,32 @@ class NodeArray extends Array {
 		highlight?: number[];
 		file_name?: string;
 	}) {
-		this.push({ type: 'block:code', ...params });
+		this.push({ kind: 'block:code', ...params });
 		return this;
 	}
 	note(params) {
-		this.push(new Div(params));
+		this.push(new Div({ ...params, class: [...(params.class ?? []), 'note'] }));
 		return this;
 	}
 	tip(params) {
-		this.push(new Div(params));
+		this.push(new Div({ ...params, class: [...(params.class ?? []), 'tip'] }));
 		return this;
 	}
 	important(params) {
-		this.push(new Div(params));
+		this.push(new Div({ ...params, class: [...(params.class ?? []), 'important'] }));
 		return this;
 	}
 	warning(params) {
-		this.push(new Div(params));
+		this.push(new Div({ ...params, class: [...(params.class ?? []), 'warning'] }));
 		return this;
 	}
 	caution(params) {
-		this.push(new Div(params));
+		this.push(new Div({ ...params, class: [...(params.class ?? []), 'caution'] }));
 		return this;
 	}
 	// media
 	image(params: { src: string; alt: string; class?: string }) {
-		this.push({ type: 'block:img', ...params });
+		this.push({ kind: 'block:img', ...params });
 		return this;
 	}
 	youtube(params) {
@@ -397,7 +567,7 @@ class Page {
 	published_at?: string = undefined;
 	updated_at?: string = undefined;
 
-	nodes = new NodeArray();
+	node;
 
 	constructor(params: {
 		h1: string;
@@ -406,7 +576,7 @@ class Page {
 		hero_img?: string;
 		published_at?: string;
 		updated_at?: string;
-		nodes?: NodeArray;
+		node: BlockNode;
 	}) {
 		this.h1 = params.h1;
 		this.slug = params.slug;
@@ -414,10 +584,7 @@ class Page {
 		this.hero_img = params.hero_img;
 		this.published_at = params.published_at;
 		this.updated_at = params.updated_at;
-
-		if (params.nodes) {
-			this.nodes = params.nodes;
-		}
+		this.node = params.node;
 	}
 
 	fromJSON() {}
@@ -428,75 +595,77 @@ class Page {
 const page = new Page({
 	h1: 'First page',
 	slug: 'first-page',
-	nodes: new NodeArray()
-		.p({
-			class: 'text-white',
-			children: new NodeArray()
-				.text(
-					`This repository contains a GitHub workflow with a build job that builds
-					your SvelteKit app into a very minimal systemd portable service and a
-					deploy job that can upload and start the container on your server.
-					The image built by the build job only contains your SvelteKit app,
-					a Node.js executable and glibc++. The total size of the final image
-					is approximately 37 MB.`
-				)
-				.a('Svelte', 'https://svelte.dev')
-		})
-		.h2({
-			children: new NodeArray().text('How to use This')
-		})
-		.p({
-			children: new NodeArray().text('To use this repository, you have two options:')
-		})
-		.ol({
-			children: new NodeArray()
-				.li({
-					children: new NodeArray().a('Use it as a template', 'https://')
-				})
-				.li({
-					children: new NodeArray().text('Start from scratch:').ul({
-						children: new NodeArray()
-							.li({
-								children: new NodeArray().text('Create a new SvelteKit project using')
-							})
-							.li({
-								children: new NodeArray().text('Create a new SvelteKit project using')
-							})
+	node: new Article({
+		children: new NodeArray()
+			.p({
+				class: 'text-white',
+				children: new NodeArray()
+					.text(
+						`This repository contains a GitHub workflow with a build job that builds
+						your SvelteKit app into a very minimal systemd portable service and a
+						deploy job that can upload and start the container on your server.
+						The image built by the build job only contains your SvelteKit app,
+						a Node.js executable and glibc++. The total size of the final image
+						is approximately 37 MB. `
+					)
+					.a('Svelte', 'https://svelte.dev')
+			})
+			.h2({
+				children: new NodeArray().text('How to use This')
+			})
+			.p({
+				children: new NodeArray().text('To use this repository, you have two options:')
+			})
+			.ol({
+				children: new NodeArray()
+					.li({
+						children: new NodeArray().a('Use it as a template', 'https://')
 					})
-				})
-		})
-		.image({
-			src: '',
-			alt: ''
-		})
-		.precode({
-			lang: 'js',
-			code: 'console.log("Hello")'
-		})
-		.h2({
-			children: new NodeArray().text('The best JavaScript frameworks')
-		})
-		.ol({
-			children: new NodeArray()
-				.li({
-					children: new NodeArray().text('Svelte')
-				})
-				.li({
-					children: new NodeArray().text('Vue')
-				})
-				.li({
-					children: new NodeArray().text('Solid')
-				})
-		})
-		.note({
-			children: new NodeArray()
-				.p({
-					children: new NodeArray()
-						.text('systemd portable services')
-						.a('Google', 'https://google.com')
-				})
-				.precode({ lang: 'js', code: '' })
-		})
+					.li({
+						children: new NodeArray().text('Start from scratch:').ul({
+							children: new NodeArray()
+								.li({
+									children: new NodeArray().text('Create a new SvelteKit project using')
+								})
+								.li({
+									children: new NodeArray().text('Create a new SvelteKit project using')
+								})
+						})
+					})
+			})
+			.image({
+				src: '',
+				alt: ''
+			})
+			.precode({
+				lang: 'js',
+				code: 'console.log("Hello")'
+			})
+			.h2({
+				children: new NodeArray().text('The best JavaScript frameworks')
+			})
+			.ol({
+				children: new NodeArray()
+					.li({
+						children: new NodeArray().text('Svelte')
+					})
+					.li({
+						children: new NodeArray().text('Vue')
+					})
+					.li({
+						children: new NodeArray().text('Solid')
+					})
+			})
+			.note({
+				children: new NodeArray()
+					.p({
+						children: new NodeArray()
+							.text('systemd portable services')
+							.a('Google', 'https://google.com')
+					})
+					.precode({ lang: 'js', code: '' })
+			})
+	})
 });
 
 console.log(JSON.stringify(page, null, 2));
