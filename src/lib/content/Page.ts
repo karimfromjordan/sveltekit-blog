@@ -711,7 +711,7 @@ class Page {
 	metadata;
 
 	constructor(params: {
-		node: BlockNode;
+		node?: BlockNode;
 		variables?: Record<string, unknown>;
 		metadata?: Record<string, unknown>;
 	}) {
@@ -721,8 +721,6 @@ class Page {
 	}
 
 	fromJSON() {}
-
-	toHTML() {}
 }
 
 const page = new Page({
