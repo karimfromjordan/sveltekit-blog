@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 
-import { page } from '$lib/content/post';
+import { page } from '$lib/content/Page';
 
 export const load: PageServerLoad = async (event) => {
 	return {

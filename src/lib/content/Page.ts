@@ -2,26 +2,29 @@ import { codeToHtml } from 'shiki';
 
 class BlockNode {
 	children;
-	id;
-	class;
-	style;
-	data;
 	metadata;
+	// HTML attributes
+	attr = {
+		id: undefined,
+		class: undefined,
+		style: undefined,
+		data: undefined
+	};
 
 	constructor(params: {
 		children: NodeArray;
+		metadata?: unknown;
 		id?: string;
 		class?: string[];
 		style?: Record<string, string>;
 		data?: Record<string, string>;
-		metadata?: unknown;
 	}) {
 		this.children = params.children;
-		this.id = params.id;
-		this.class = params.class;
-		this.style = params.style;
-		this.data = params.data;
 		this.metadata = params.metadata;
+		this.attr.id = params.id;
+		this.attr.class = params.class;
+		this.attr.style = params.style;
+		this.attr.data = params.data;
 	}
 	get kind() {
 		return 'block';
@@ -30,11 +33,7 @@ class BlockNode {
 		return {
 			kind: this.kind,
 			children: this.children,
-			id: this.id,
-			class: this.class,
-			style: this.style,
-			data: this.data,
-			metadata: this.metadata
+			attr: this.attr
 		};
 	}
 }
@@ -42,8 +41,13 @@ class BlockNode {
 class InlineNode {
 	text;
 
-	constructor(text: string) {
-		this.text = text;
+	attr: {
+		class: undefined;
+	};
+
+	constructor(params: { text: string; class?: string[] }) {
+		this.text = params.text;
+		this.attr.class = params.class;
 	}
 	get kind() {
 		return 'inline';
@@ -280,7 +284,7 @@ class Paragraph extends BlockNode {
 
 class Text extends InlineNode {
 	constructor(text: string) {
-		super(text);
+		super({ text });
 	}
 	toJSON() {
 		return super.toObject();
@@ -290,7 +294,6 @@ class Anchor extends InlineNode {
 	href;
 	target;
 	download;
-	class;
 
 	constructor(params: {
 		text: string;
@@ -299,12 +302,11 @@ class Anchor extends InlineNode {
 		download?: boolean;
 		class?: string[];
 	}) {
-		super(params.text);
+		super({ text: params.text, class: params.class });
 
 		this.href = params.href;
 		this.target = params.target;
 		this.download = params.download;
-		this.class = params.class;
 	}
 	get tag() {
 		return 'a';
@@ -316,81 +318,52 @@ class Anchor extends InlineNode {
 			text: this.text,
 			href: this.href,
 			target: this.target,
-			download: this.download,
-			class: this.class
+			download: this.download
 		};
 	}
 }
 class Strong extends InlineNode {
-	class;
-
 	constructor(params: { text: string; class?: string[] }) {
-		super(params.text);
-		this.class = params.class;
+		super(params);
 	}
 	get tag() {
 		return 'strong';
 	}
 	toJSON() {
-		return {
-			...super.toObject(),
-			tag: this.tag,
-			class: this.class
-		};
+		return { ...super.toObject(), tag: this.tag };
 	}
 }
 class Cite extends InlineNode {
-	class;
-
 	constructor(params: { text: string; class?: string[] }) {
-		super(params.text);
-		this.class = params.class;
+		super(params);
 	}
 	get tag() {
 		return 'cite';
 	}
 	toJSON() {
-		return {
-			...super.toObject(),
-			tag: this.tag,
-			class: this.class
-		};
+		return { ...super.toObject(), tag: this.tag };
 	}
 }
 class Code extends InlineNode {
-	class;
-
 	constructor(params: { text: string; class?: string[] }) {
-		super(params.text);
-		this.class = params.class;
+		super(params);
 	}
 	get tag() {
 		return 'code';
 	}
 	toJSON() {
-		return {
-			...super.toObject(),
-			tag: this.tag,
-			class: this.class
-		};
+		return { ...super.toObject(), tag: this.tag };
 	}
 }
 class KBD extends InlineNode {
-	class;
-
 	constructor(params: { text: string; class?: string[] }) {
-		super(params.text);
-		this.class = params.class;
+		super(params);
 	}
 	get tag() {
 		return 'kbd';
 	}
 	toJSON() {
-		return {
-			...super.toObject(),
-			tag: this.tag,
-			class: this.class
-		};
+		return { ...super.toObject(), tag: this.tag };
 	}
 }
 
@@ -560,31 +533,18 @@ class NodeArray extends Array {
 }
 
 class Page {
-	h1 = '';
-	slug: string;
-	description?: string = undefined;
-	hero_img?: string = undefined;
-	published_at?: string = undefined;
-	updated_at?: string = undefined;
-
 	node;
+	variables;
+	metadata;
 
 	constructor(params: {
-		h1: string;
-		slug: string;
-		description?: string;
-		hero_img?: string;
-		published_at?: string;
-		updated_at?: string;
 		node: BlockNode;
+		variables?: Record<string, unknown>;
+		metadata?: Record<string, unknown>;
 	}) {
-		this.h1 = params.h1;
-		this.slug = params.slug;
-		this.description = params.description;
-		this.hero_img = params.hero_img;
-		this.published_at = params.published_at;
-		this.updated_at = params.updated_at;
 		this.node = params.node;
+		this.variables = params.variables;
+		this.metadata = params.metadata;
 	}
 
 	fromJSON() {}
@@ -593,8 +553,6 @@ class Page {
 }
 
 const page = new Page({
-	h1: 'First page',
-	slug: 'first-page',
 	node: new Article({
 		children: new NodeArray()
 			.p({
@@ -667,7 +625,5 @@ const page = new Page({
 			})
 	})
 });
-
-console.log(JSON.stringify(page, null, 2));
 
 export { page };

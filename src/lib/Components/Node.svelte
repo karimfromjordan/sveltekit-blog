@@ -1,22 +1,22 @@
 <script>
 	import Node from '$lib/Components/Node.svelte';
 
-	const { kind, children, tag, component, text, metadata, ...attributes } = $props();
+	const { node, variables, components } = $props();
 </script>
 
-{#if tag}
-	<svelte:element this={tag} {...attributes}>
-		{#if text}
-			{text}
+{#if node.tag}
+	<svelte:element this={node.tag} {...node.attr}>
+		{#if node.text}
+			{node.text}
 		{/if}
-		{#if children}
-			{#each children as node (node)}
-				<Node {...node}></Node>
+		{#if node.children}
+			{#each node.children as n (n)}
+				<Node {...n}></Node>
 			{/each}
 		{/if}
 	</svelte:element>
-{:else if component}
+{:else if node.component}
 	Component
-{:else if text}
-	{text}
+{:else if node.text}
+	{node.text}
 {/if}
