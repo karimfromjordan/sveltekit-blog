@@ -581,6 +581,79 @@ class TableBody extends BlockNode {
 	}
 }
 
+interface TableRowParams {
+	children: NodeArray;
+	class?: string[];
+}
+class TableRow extends BlockNode {
+	constructor(params: TableRowParams) {
+		super({
+			children: params.children,
+			attributes: {
+				class: params.class
+			}
+		});
+	}
+	get tag() {
+		return 'tr';
+	}
+	toJSON() {
+		return { ...super.toObject(), tag: this.tag };
+	}
+}
+
+interface TableHeaderParams {
+	children: NodeArray;
+	class?: string[];
+	colspan?: number;
+	rowspan?: number;
+	scope?: 'row' | 'col' | 'rowgroup' | 'colgroup';
+}
+class TableHeader extends BlockNode {
+	constructor(params: TableHeaderParams) {
+		super({
+			children: params.children,
+			attributes: {
+				colspan: params.colspan,
+				rowspan: params.rowspan,
+				scope: params.scope,
+				class: params.class
+			}
+		});
+	}
+	get tag() {
+		return 'th';
+	}
+	toJSON() {
+		return { ...super.toObject(), tag: this.tag };
+	}
+}
+
+interface TableDataCellParams {
+	children: NodeArray;
+	class?: string[];
+	colspan?: number;
+	rowspan?: number;
+}
+class TableDataCell extends BlockNode {
+	constructor(params: TableDataCellParams) {
+		super({
+			children: params.children,
+			attributes: {
+				colspan: params.colspan,
+				rowspan: params.rowspan,
+				class: params.class
+			}
+		});
+	}
+	get tag() {
+		return 'td';
+	}
+	toJSON() {
+		return { ...super.toObject(), tag: this.tag };
+	}
+}
+
 class Text extends InlineNode {
 	constructor(text: string) {
 		super({ text });
@@ -815,10 +888,16 @@ class NodeArray extends Array {
 		this.push(new TableBody(params));
 		return this;
 	}
-	tr(params) {
+	tr(params: TableRowParams) {
+		this.push(new TableRow(params));
 		return this;
 	}
-	td(params) {
+	th(params: TableHeaderParams) {
+		this.push(new TableHeader(params));
+		return this;
+	}
+	td(params: TableDataCellParams) {
+		this.push(new TableDataCell(params));
 		return this;
 	}
 	div(params: DivParams) {
@@ -975,6 +1054,49 @@ const page = new Page({
 					})
 					.li({
 						children: new NodeArray().text('Solid')
+					})
+			})
+			.table({
+				children: new NodeArray()
+					.thead({
+						children: new NodeArray().tr({
+							children: new NodeArray()
+								.th({ children: new NodeArray().text('Student ID') })
+								.th({ children: new NodeArray().text('Name') })
+								.th({ children: new NodeArray().text('Major') })
+								.th({ children: new NodeArray().text('Credits') })
+						})
+					})
+					.tbody({
+						children: new NodeArray()
+							.tr({
+								children: new NodeArray()
+									.td({ children: new NodeArray().text('3741255') })
+									.td({ children: new NodeArray().text('3741255') })
+									.td({ children: new NodeArray().text('3741255') })
+									.td({ children: new NodeArray().text('3741255') })
+							})
+							.tr({
+								children: new NodeArray()
+									.td({ children: new NodeArray().text('3741255') })
+									.td({ children: new NodeArray().text('3741255') })
+									.td({ children: new NodeArray().text('3741255') })
+									.td({ children: new NodeArray().text('3741255') })
+							})
+							.tr({
+								children: new NodeArray()
+									.td({ children: new NodeArray().text('3741255') })
+									.td({ children: new NodeArray().text('3741255') })
+									.td({ children: new NodeArray().text('3741255') })
+									.td({ children: new NodeArray().text('3741255') })
+							})
+							.tr({
+								children: new NodeArray()
+									.td({ children: new NodeArray().text('3741255') })
+									.td({ children: new NodeArray().text('3741255') })
+									.td({ children: new NodeArray().text('3741255') })
+									.td({ children: new NodeArray().text('3741255') })
+							})
 					})
 			})
 			.note({
