@@ -539,6 +539,27 @@ class TableHead extends BlockNode {
 	}
 }
 
+interface TableFootParams {
+	children: NodeArray;
+	class?: string[];
+}
+class TableFoot extends BlockNode {
+	constructor(params: TableFootParams) {
+		super({
+			children: params.children,
+			attributes: {
+				class: params.class
+			}
+		});
+	}
+	get tag() {
+		return 'tfoot';
+	}
+	toJSON() {
+		return { ...super.toObject(), tag: this.tag };
+	}
+}
+
 interface TableBodyParams {
 	children: NodeArray;
 	class?: string[];
@@ -784,6 +805,10 @@ class NodeArray extends Array {
 	}
 	thead(params: TableHeadParams) {
 		this.push(new TableHead(params));
+		return this;
+	}
+	tfoot(params: TableFootParams) {
+		this.push(new TableFoot(params));
 		return this;
 	}
 	tbody(params: TableBodyParams) {
