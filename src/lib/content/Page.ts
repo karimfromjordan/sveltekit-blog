@@ -476,6 +476,90 @@ class Blockquote extends BlockNode {
 	}
 }
 
+interface CaptionParams {
+	children: NodeArray;
+	class?: string[];
+}
+class Caption extends BlockNode {
+	constructor(params: CaptionParams) {
+		super({
+			children: params.children,
+			attributes: {
+				class: params.class
+			}
+		});
+	}
+	get tag() {
+		return 'caption';
+	}
+	toJSON() {
+		return { ...super.toObject(), tag: this.tag };
+	}
+}
+
+interface TableParams {
+	children: NodeArray;
+	class?: string[];
+}
+class Table extends BlockNode {
+	constructor(params: TableParams) {
+		super({
+			children: params.children,
+			attributes: {
+				class: params.class
+			}
+		});
+	}
+	get tag() {
+		return 'table';
+	}
+	toJSON() {
+		return { ...super.toObject(), tag: this.tag };
+	}
+}
+
+interface TableHeadParams {
+	children: NodeArray;
+	class?: string[];
+}
+class TableHead extends BlockNode {
+	constructor(params: TableHeadParams) {
+		super({
+			children: params.children,
+			attributes: {
+				class: params.class
+			}
+		});
+	}
+	get tag() {
+		return 'thead';
+	}
+	toJSON() {
+		return { ...super.toObject(), tag: this.tag };
+	}
+}
+
+interface TableBodyParams {
+	children: NodeArray;
+	class?: string[];
+}
+class TableBody extends BlockNode {
+	constructor(params: TableBodyParams) {
+		super({
+			children: params.children,
+			attributes: {
+				class: params.class
+			}
+		});
+	}
+	get tag() {
+		return 'tbody';
+	}
+	toJSON() {
+		return { ...super.toObject(), tag: this.tag };
+	}
+}
+
 class Text extends InlineNode {
 	constructor(text: string) {
 		super({ text });
@@ -673,13 +757,16 @@ class NodeArray extends Array {
 		this.push(new Summary(params));
 		return this;
 	}
-	table(params) {
+	table(params: TableParams) {
+		this.push(new Table(params));
 		return this;
 	}
-	thead(params) {
+	thead(params: TableHeadParams) {
+		this.push(new TableHead(params));
 		return this;
 	}
-	tbody(params) {
+	tbody(params: TableBodyParams) {
+		this.push(new TableBody(params));
 		return this;
 	}
 	tr(params) {
