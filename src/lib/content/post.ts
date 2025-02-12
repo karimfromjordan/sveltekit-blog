@@ -444,7 +444,7 @@ class NodeArray extends Array {
 		return this;
 	}
 	p(params) {
-		this.push(new Paragraph());
+		this.push(new Paragraph(params));
 		return this;
 	}
 	ol(params: { children: NodeArray; class?: string; data?: Record<string, string> }) {
