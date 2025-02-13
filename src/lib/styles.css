@@ -1,0 +1,104 @@
+@layer reset, defaults, components, utilities;
+
+@layer utilities {
+	.row {
+		display: flex;
+		flex-direction: row;
+	}
+	.column {
+		display: flex;
+		flex-direction: column;
+	}
+	.gap-1 {
+	}
+	.items-center {
+		align-items: center;
+	}
+	.justify-center {
+		align-items: center;
+	}
+}
+
+@layer components {
+	.button {
+		appearance: none;
+	}
+	.input {
+		appearance: none;
+	}
+  .label {
+
+  }
+}
+
+@layer defaults {
+	:root {
+		/* Typography */
+
+		/* Sizing */
+
+		/* Colors */
+	}
+}
+
+@layer reset {
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+		padding: 0;
+		margin: 0;
+	}
+
+	html,
+	body {
+		height: 100%;
+	}
+
+	html:focus-within {
+		scroll-behavior: smooth;
+	}
+
+	a:not([class]) {
+		text-decoration-skip-ink: auto;
+	}
+
+	img,
+	picture,
+	video,
+	canvas {
+		display: block;
+		max-width: 100%;
+	}
+
+	input,
+	button,
+	textarea,
+	select,
+	input[type='file']::file-selector-button {
+		font: inherit;
+	}
+
+	label,
+	textarea,
+	progress,
+	input:where(
+			[type='email'],
+			[type='password'],
+			[type='search'],
+			[type='tel'],
+			[type='text'],
+			[type='url'],
+			[type='file']
+		) {
+		display: block;
+		width: 100%;
+	}
+
+	textarea {
+		box-sizing: content-box;
+		min-height: 5em;
+		resize: block;
+		resize: vertical;
+	}
+}

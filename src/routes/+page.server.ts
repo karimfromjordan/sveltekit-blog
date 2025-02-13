@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 
-import { page } from '$lib/content/Page';
+import { page } from '$lib/Page';
 
 console.log(JSON.stringify(page, null, 2));
 
