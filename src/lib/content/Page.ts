@@ -22,7 +22,6 @@ class BlockNode {
 		};
 	}
 }
-
 class InlineNode {
 	text;
 	attributes;
@@ -41,7 +40,6 @@ class InlineNode {
 		};
 	}
 }
-
 class ComponentNode {
 	component;
 	properties;
