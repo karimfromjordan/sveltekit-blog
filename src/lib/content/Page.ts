@@ -1005,6 +1005,9 @@ class Page {
 const page = new Page({
 	node: new Article({
 		children: new NodeArray()
+			.h1({
+				children: new NodeArray().text('Introduction to systemd')
+			})
 			.p({
 				class: ['text-white', 'bg-black'],
 				children: new NodeArray()
