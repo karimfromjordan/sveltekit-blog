@@ -1107,7 +1107,7 @@ const page = new Page({
 							})
 					})
 			})
-			.note({
+			.info({
 				children: new NodeArray().p({
 					children: new NodeArray()
 						.text('systemd portable services ')
