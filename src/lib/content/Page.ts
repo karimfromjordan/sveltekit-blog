@@ -938,10 +938,6 @@ class NodeArray extends Array {
 		this.push(new Div({ ...params, class: [...(params.class ?? []), 'warning'] }));
 		return this;
 	}
-	caution(params: { children: NodeArray; class?: string[] }) {
-		this.push(new Div({ ...params, class: [...(params.class ?? []), 'caution'] }));
-		return this;
-	}
 	// media
 	image(params: { src: string; alt: string; class?: string }) {
 		this.push({ kind: 'block:img', ...params });
