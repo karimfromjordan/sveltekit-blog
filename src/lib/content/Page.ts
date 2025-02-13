@@ -11,16 +11,18 @@ class BlockNode {
 		data: undefined
 	};
 	// Component props
-	properties?: Record<string, unknown>
+	properties?: Record<string, unknown>;
 
 	constructor(params: {
 		children: NodeArray;
 		metadata?: unknown;
 		attributes?: Record<string, unknown>;
+		properties?: Record<string, unknown>;
 	}) {
 		this.children = params.children;
 		this.metadata = params.metadata;
 		this.attributes = params.attributes;
+		this.properties = params.properties;
 	}
 	get kind() {
 		return 'block';
@@ -29,7 +31,8 @@ class BlockNode {
 		return {
 			kind: this.kind,
 			children: this.children,
-			attributes: this.attributes
+			attributes: this.attributes,
+			properties: this.properties
 		};
 	}
 }
