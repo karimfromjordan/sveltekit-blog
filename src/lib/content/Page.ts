@@ -10,6 +10,8 @@ class BlockNode {
 		style: undefined,
 		data: undefined
 	};
+	// Component props
+	properties?: Record<string, unknown>
 
 	constructor(params: {
 		children: NodeArray;
