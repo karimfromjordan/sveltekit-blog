@@ -24,12 +24,8 @@ class BlockNode {
 		this.attributes = params.attributes;
 		this.properties = params.properties;
 	}
-	get kind() {
-		return 'block';
-	}
 	toObject() {
 		return {
-			kind: this.kind,
 			children: this.children,
 			attributes: this.attributes,
 			properties: this.properties
@@ -46,12 +42,8 @@ class InlineNode {
 		this.text = params.text;
 		this.attributes = params.attributes;
 	}
-	get kind() {
-		return 'inline';
-	}
 	toObject() {
 		return {
-			kind: this.kind,
 			text: this.text,
 			attributes: this.attributes
 		};
