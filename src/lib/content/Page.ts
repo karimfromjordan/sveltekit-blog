@@ -920,8 +920,8 @@ class NodeArray extends Array {
 		this.push({ kind: 'block:code', ...params });
 		return this;
 	}
-	note(params) {
-		this.push(new Div({ ...params, class: [...(params.class ?? []), 'note'] }));
+	info(params) {
+		this.push(new Div({ ...params, role: 'note', class: [...(params.class ?? []), 'info'] }));
 		return this;
 	}
 	tip(params) {
