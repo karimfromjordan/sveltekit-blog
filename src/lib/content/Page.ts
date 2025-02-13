@@ -3,49 +3,64 @@ import { codeToHtml } from 'shiki';
 class BlockNode {
 	children;
 	metadata;
-	// HTML attributes
-	attributes?: Record<string, unknown> = {
-		id: undefined,
-		class: undefined,
-		style: undefined,
-		data: undefined
-	};
-	// Component props
-	properties?: Record<string, unknown>;
+	attributes?;
 
 	constructor(params: {
 		children: NodeArray;
-		metadata?: unknown;
 		attributes?: Record<string, unknown>;
-		properties?: Record<string, unknown>;
+		metadata?: unknown;
 	}) {
 		this.children = params.children;
-		this.metadata = params.metadata;
 		this.attributes = params.attributes;
-		this.properties = params.properties;
+		this.metadata = params.metadata;
 	}
 	toObject() {
 		return {
 			children: this.children,
 			attributes: this.attributes,
-			properties: this.properties
+			metadata: this.metadata
 		};
 	}
 }
 
 class InlineNode {
 	text;
+	attributes;
+	metadata;
 
-	attributes?: Record<string, unknown>;
-
-	constructor(params: { text: string; attributes?: Record<string, unknown> }) {
+	constructor(params: { text: string; attributes?: Record<string, unknown>; metadata?: unknown }) {
 		this.text = params.text;
 		this.attributes = params.attributes;
+		this.metadata = params.metadata;
 	}
 	toObject() {
 		return {
 			text: this.text,
-			attributes: this.attributes
+			attributes: this.attributes,
+			metadata: this.metadata
+		};
+	}
+}
+
+class ComponentNode {
+	component;
+	properties;
+	metadata;
+
+	constructor(params: {
+		component: string;
+		properties?: Record<string, unknown>;
+		metadata?: unknown;
+	}) {
+		this.component = params.component;
+		this.properties = params.properties;
+		this.metadata = params.metadata;
+	}
+	toObject() {
+		return {
+			component: this.component,
+			properties: this.properties,
+			metadata: this.metadata
 		};
 	}
 }
@@ -1043,6 +1058,7 @@ const page = new Page({
 				children: new NodeArray().text('The best JavaScript frameworks')
 			})
 			.ol({
+				type: 'i',
 				children: new NodeArray()
 					.li({
 						children: new NodeArray().text('Svelte')
