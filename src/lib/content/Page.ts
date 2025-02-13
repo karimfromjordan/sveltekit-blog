@@ -264,13 +264,15 @@ class Summary extends BlockNode {
 interface DivParams {
 	children: NodeArray;
 	class?: string[];
+	role?: 'note';
 }
 class Div extends BlockNode {
 	constructor(params: DivParams) {
 		super({
 			children: params.children,
 			attributes: {
-				class: params.class
+				class: params.class,
+				role: params.role
 			}
 		});
 	}
@@ -920,23 +922,23 @@ class NodeArray extends Array {
 		this.push({ kind: 'block:code', ...params });
 		return this;
 	}
-	info(params) {
+	info(params: { children: NodeArray; class?: string[] }) {
 		this.push(new Div({ ...params, role: 'note', class: [...(params.class ?? []), 'info'] }));
 		return this;
 	}
-	tip(params) {
+	tip(params: { children: NodeArray; class?: string[] }) {
 		this.push(new Div({ ...params, class: [...(params.class ?? []), 'tip'] }));
 		return this;
 	}
-	important(params) {
+	important(params: { children: NodeArray; class?: string[] }) {
 		this.push(new Div({ ...params, class: [...(params.class ?? []), 'important'] }));
 		return this;
 	}
-	warning(params) {
+	warning(params: { children: NodeArray; class?: string[] }) {
 		this.push(new Div({ ...params, class: [...(params.class ?? []), 'warning'] }));
 		return this;
 	}
-	caution(params) {
+	caution(params: { children: NodeArray; class?: string[] }) {
 		this.push(new Div({ ...params, class: [...(params.class ?? []), 'caution'] }));
 		return this;
 	}
