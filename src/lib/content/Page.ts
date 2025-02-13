@@ -1008,8 +1008,6 @@ class Page {
 		this.variables = params.variables;
 		this.metadata = params.metadata;
 	}
-
-	fromJSON() {}
 }
 
 const page = new Page({
