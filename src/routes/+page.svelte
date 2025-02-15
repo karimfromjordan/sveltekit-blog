@@ -1,5 +1,5 @@
 <script>
-	import Node from '$lib/Components/Node.svelte';
+	import Node from '$lib/components/Node.svelte';
 
 	const props = $props();
 </script>

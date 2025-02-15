@@ -2,22 +2,26 @@ import { codeToHtml } from 'shiki';
 
 class BlockNode {
 	children;
+	attributes;
+	data;
 	metadata;
-	attributes?;
 
 	constructor(params: {
 		children: NodeArray;
 		attributes?: Record<string, unknown>;
+		data?: unknown;
 		metadata?: unknown;
 	}) {
 		this.children = params.children;
 		this.attributes = params.attributes;
+		this.data = params.data;
 		this.metadata = params.metadata;
 	}
 	toObject() {
 		return {
 			children: this.children,
 			attributes: this.attributes,
+			data: this.data,
 			metadata: this.metadata
 		};
 	}
@@ -25,17 +29,25 @@ class BlockNode {
 class InlineNode {
 	text;
 	attributes;
+	data;
 	metadata;
 
-	constructor(params: { text: string; attributes?: Record<string, unknown>; metadata?: unknown }) {
+	constructor(params: {
+		text: string;
+		attributes?: Record<string, unknown>;
+		data?: unknown;
+		metadata?: unknown;
+	}) {
 		this.text = params.text;
 		this.attributes = params.attributes;
+		this.data = params.data;
 		this.metadata = params.metadata;
 	}
 	toObject() {
 		return {
 			text: this.text,
 			attributes: this.attributes,
+			data: this.data,
 			metadata: this.metadata
 		};
 	}
@@ -43,21 +55,25 @@ class InlineNode {
 class ComponentNode {
 	component;
 	properties;
+	data;
 	metadata;
 
 	constructor(params: {
 		component: string;
 		properties?: Record<string, unknown>;
+		data?: unknown;
 		metadata?: unknown;
 	}) {
 		this.component = params.component;
 		this.properties = params.properties;
+		this.data = params.data;
 		this.metadata = params.metadata;
 	}
 	toObject() {
 		return {
 			component: this.component,
 			properties: this.properties,
+			data: this.data,
 			metadata: this.metadata
 		};
 	}
@@ -149,6 +165,28 @@ class Article extends BlockNode {
 	}
 	get tag() {
 		return 'article';
+	}
+	toJSON() {
+		return { ...super.toObject(), tag: this.tag };
+	}
+}
+interface NavParams {
+	children: NodeArray;
+	class?: string[];
+	aria_label?: string;
+}
+class Nav extends BlockNode {
+	constructor(params: NavParams) {
+		super({
+			children: params.children,
+			attributes: {
+				class: params.class,
+				aria_label: params.aria_label
+			}
+		});
+	}
+	get tag() {
+		return 'nav';
 	}
 	toJSON() {
 		return { ...super.toObject(), tag: this.tag };
@@ -668,7 +706,7 @@ class TableDataCell extends BlockNode {
 
 class Text extends InlineNode {
 	constructor(text: string) {
-		super({ text });
+		super({ text: text.replace(/\s/g, ' ').replace(/\s+/g, ' ') });
 	}
 	toJSON() {
 		return super.toObject();
@@ -807,6 +845,24 @@ class KBD extends InlineNode {
 	}
 }
 
+// ---
+const theme = {
+	hero(params: { h1: H1 }) {
+		return new Header({ children: new NodeArray() });
+	},
+	cta_anchor(params: {}) {
+		return new Anchor({
+			children: new NodeArray()
+		});
+	},
+	card(params) {
+		return new Article({
+			children: new NodeArray()
+		});
+	}
+};
+// ---
+
 class NodeArray extends Array {
 	metadata;
 
@@ -827,6 +883,10 @@ class NodeArray extends Array {
 		this.push(new Main(params));
 		return this;
 	}
+	nav(params: NavParams) {
+		this.push(new Nav(params));
+		return this;
+	}
 	article(params: ArticleParams) {
 		this.push(new Article(params));
 		return this;
@@ -843,7 +903,6 @@ class NodeArray extends Array {
 		this.push(new Search(params));
 		return this;
 	}
-	// typography
 	h1(params: H1Params) {
 		this.push(new H1(params));
 		return this;
@@ -943,9 +1002,12 @@ class NodeArray extends Array {
 		this.push(new Div({ ...params, class: [...(params.class ?? []), 'warning'] }));
 		return this;
 	}
-	// media
-	image(params: { src: string; alt: string; class?: string }) {
-		this.push({ kind: 'block:img', ...params });
+	img(params: { src: string; alt: string; class?: string }) {
+		this.push(new Image(params));
+		return this;
+	}
+	video(params: { src: string; poster: string; class?: string }) {
+		this.push(new Video(params));
 		return this;
 	}
 	youtube(params) {
@@ -957,7 +1019,6 @@ class NodeArray extends Array {
 	twitter(params) {
 		return this;
 	}
-	// inline
 	text(params) {
 		this.push(new Text(params));
 		return this;
@@ -994,17 +1055,9 @@ class NodeArray extends Array {
 
 class Page {
 	node;
-	variables;
-	metadata;
 
-	constructor(params: {
-		node?: BlockNode;
-		variables?: Record<string, unknown>;
-		metadata?: Record<string, unknown>;
-	}) {
+	constructor(params: { node?: BlockNode }) {
 		this.node = params.node;
-		this.variables = params.variables;
-		this.metadata = params.metadata;
 	}
 }
 
